@@ -40,6 +40,7 @@ public class HomeController : ControllerBase
                 ListedOn = h.ListedOn,
                 PurchasedOn = h.PurchasedOn,
                 Sold = h.Sold,
+                Price = h.Price,
                 HomeTypeId = h.HomeTypeId,
                 HomeOwner = h.HomeOwner != null
                 ? new UserProfileDTO
@@ -102,6 +103,7 @@ public class HomeController : ControllerBase
             ListedOn = home.ListedOn,
             PurchasedOn = home.PurchasedOn,
             Sold = home.Sold,
+            Price = home.Price,
             HomeTypeId = home.HomeTypeId,
             HomeType = home.HomeType != null
             ? new HomeTypeDTO
@@ -143,11 +145,10 @@ public class HomeController : ControllerBase
     // [Authorize]
     public IActionResult CreateHomeListing(Home home)
     {
-        home.ListedOn = DateTime.Now;
+        home.ListedOn = DateTime.Today;
         home.Sold = false;
         home.PurchasedOn = null;
         home.HomeOwner = null;
-        home.HomeType = _dbContext.HomeTypes.SingleOrDefault(ht => ht.Id == home.HomeTypeId);
 
         _dbContext.Homes.Add(home);
         _dbContext.SaveChanges();
@@ -155,9 +156,10 @@ public class HomeController : ControllerBase
     }
 
     // Edit properties of a home
+    // had to create a new DTO because server was expecting all other properties to be included in body
     [HttpPut("{id}")]
-    // [Authorize]
-    public IActionResult UpdateHome(Home home, int id)
+    //[Authorize]
+    public IActionResult UpdateHome([FromBody] HomePriceUpdateDTO home, [FromRoute] int id)
     {
         Home homeToUpdate = _dbContext.Homes.SingleOrDefault(h => h.Id == id);
         if (homeToUpdate == null)
@@ -168,10 +170,53 @@ public class HomeController : ControllerBase
         {
             return BadRequest();
         }
-        homeToUpdate.HomeImage = home.HomeImage;
-        homeToUpdate.SquareFeet = home.SquareFeet;
-        homeToUpdate.StreetAddress = homeToUpdate.StreetAddress;
+        homeToUpdate.Price = home.Price;
 
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    // Mark home as sold with userId query string param
+    [HttpPut("{id}/sold")]
+    public IActionResult SellHome([FromRoute] int id, [FromQuery] int userId)
+    {
+        Home homeToUpdate = _dbContext.Homes.SingleOrDefault(h => h.Id == id);
+        if (homeToUpdate == null)
+        {
+            return NotFound();
+        }
+        else if (id != userId)
+        {
+            return BadRequest();
+        }
+
+        // Mark the home as sold
+        homeToUpdate.Sold = true;
+        homeToUpdate.PurchasedOn = DateTime.Today;
+
+        // Assign the buyer as the home owner
+        homeToUpdate.UserProfileId = userId;
+        homeToUpdate.HomeOwner = _dbContext.UserProfiles.SingleOrDefault(u => u.Id == userId);
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    // Delete a home
+    [HttpDelete("{id}")]
+    // [Authorize]
+    public IActionResult DeleteHome(int id)
+    {
+        Home homeToDelete = _dbContext.Homes.SingleOrDefault(h => h.Id == id);
+
+        if (homeToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Homes.Remove(homeToDelete);
         _dbContext.SaveChanges();
 
         return NoContent();
