@@ -24,11 +24,11 @@ public class HomeDTO
     public int? UserProfileId { get; set; }
     public UserProfileDTO? HomeOwner { get; set; }
     public bool? Sold { get; set; }
-   
     public int HomeTypeId { get; set; }
     [ForeignKey("HomeTypeId")]
-    public HomeTypeDTO HomeType { get; set; }
+    public HomeTypeDTO? HomeType { get; set; }
   
     public string? Description { get; set; }
     public List<UserSaveDTO>? UserSaves { get; set; }
+    public int Price { get; set; }
 }

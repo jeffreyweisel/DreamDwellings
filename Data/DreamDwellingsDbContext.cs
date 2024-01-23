@@ -64,7 +64,8 @@ public class DreamDwellingsDbContext : IdentityDbContext<IdentityUser>
         UserProfileId = null,
         Sold = false,
         HomeTypeId = 1,
-        Description = "Welcome to this charming 3-bedroom, 2-bathroom home offering 1500 sq ft of comfortable living space. This residence boasts a spacious interior, perfect for both relaxation and entertainment. The well-appointed bedrooms provide ample space for rest, while the inviting common areas create a warm and welcoming atmosphere. With its desirable features and prime location, this home presents an ideal opportunity for a new chapter of comfortable living."
+        Description = "Welcome to this charming 3-bedroom, 2-bathroom home offering 1500 sq ft of comfortable living space. This residence boasts a spacious interior, perfect for both relaxation and entertainment. The well-appointed bedrooms provide ample space for rest, while the inviting common areas create a warm and welcoming atmosphere. With its desirable features and prime location, this home presents an ideal opportunity for a new chapter of comfortable living.",
+        Price = 450000
     },
     new Home
     {
@@ -80,7 +81,8 @@ public class DreamDwellingsDbContext : IdentityDbContext<IdentityUser>
         UserProfileId = null,
         Sold = false,
         HomeTypeId = 1,
-        Description = "Step into luxury with this stunning 4-bedroom, 2.5-bathroom home spanning across 2000 sq ft of modern elegance. The well-designed layout offers spacious living areas and an upgraded kitchen perfect for culinary enthusiasts. Unwind in the generous bedrooms, including a master suite with a private bath. With its impressive features and generous square footage, this home provides an exceptional blend of comfort and style, making it an ideal retreat for you and your family."
+        Description = "Step into luxury with this stunning 4-bedroom, 2.5-bathroom home spanning across 2000 sq ft of modern elegance. The well-designed layout offers spacious living areas and an upgraded kitchen perfect for culinary enthusiasts. Unwind in the generous bedrooms, including a master suite with a private bath. With its impressive features and generous square footage, this home provides an exceptional blend of comfort and style, making it an ideal retreat for you and your family.",
+        Price = 292000
 
 
     },
@@ -98,7 +100,8 @@ public class DreamDwellingsDbContext : IdentityDbContext<IdentityUser>
         UserProfileId = null,
         Sold = false,
         HomeTypeId = 1,
-        Description = "Discover the perfect harmony of space and comfort in this inviting 3-bedroom, 2-bathroom home spanning 1800 sq ft. The well-designed layout creates a seamless flow between living and sleeping areas, providing both functionality and charm. Enjoy the tranquility of a spacious master suite, and relish the convenience of a thoughtfully designed kitchen. With its cozy ambiance and desirable features, this home offers a wonderful haven for relaxation and everyday living."
+        Description = "Discover the perfect harmony of space and comfort in this inviting 3-bedroom, 2-bathroom home spanning 1800 sq ft. The well-designed layout creates a seamless flow between living and sleeping areas, providing both functionality and charm. Enjoy the tranquility of a spacious master suite, and relish the convenience of a thoughtfully designed kitchen. With its cozy ambiance and desirable features, this home offers a wonderful haven for relaxation and everyday living.",
+        Price = 399000
     },
     new Home
     {
@@ -114,7 +117,8 @@ public class DreamDwellingsDbContext : IdentityDbContext<IdentityUser>
         UserProfileId = null,
         Sold = false,
         HomeTypeId = 1,
-        Description = "Indulge in the spacious luxury of this captivating 4-bedroom, 3-bathroom home boasting an expansive 2200 sq ft floor plan. This residence is designed for both comfort and style, featuring generous bedrooms, including a lavish master suite with a private bath retreat. The open-concept living areas seamlessly connect, providing a perfect setting for gatherings and entertainment. With its impressive square footage and modern amenities, this home offers a blend of elegance and functionality, creating an inviting sanctuary for you and your family."
+        Description = "Indulge in the spacious luxury of this captivating 4-bedroom, 3-bathroom home boasting an expansive 2200 sq ft floor plan. This residence is designed for both comfort and style, featuring generous bedrooms, including a lavish master suite with a private bath retreat. The open-concept living areas seamlessly connect, providing a perfect setting for gatherings and entertainment. With its impressive square footage and modern amenities, this home offers a blend of elegance and functionality, creating an inviting sanctuary for you and your family.",
+        Price = 299000
     },
     new Home
     {
@@ -130,7 +134,8 @@ public class DreamDwellingsDbContext : IdentityDbContext<IdentityUser>
         UserProfileId = null,
         Sold = false,
         HomeTypeId = 1,
-        Description = "Welcome to this delightful 3-bedroom, 2.5-bathroom home offering 1600 sq ft of cozy and efficient living space. The thoughtfully designed layout features a bright and airy atmosphere, blending practicality with style. Relax in the comfortable bedrooms, including a charming master suite with a convenient ensuite bath. With its modest yet well-utilized square footage, this home provides a perfect balance of comfort and modern living, creating a warm and inviting retreat for you and your loved ones."
+        Description = "Welcome to this delightful 3-bedroom, 2.5-bathroom home offering 1600 sq ft of cozy and efficient living space. The thoughtfully designed layout features a bright and airy atmosphere, blending practicality with style. Relax in the comfortable bedrooms, including a charming master suite with a convenient ensuite bath. With its modest yet well-utilized square footage, this home provides a perfect balance of comfort and modern living, creating a warm and inviting retreat for you and your loved ones.",
+        Price = 305000
     }
 });
         modelBuilder.Entity<HomeType>().HasData(new HomeType[]

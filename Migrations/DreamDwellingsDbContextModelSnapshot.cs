@@ -54,6 +54,9 @@ namespace DreamDwellings.Migrations
                     b.Property<DateTime>("ListedOn")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("PurchasedOn")
                         .HasColumnType("timestamp without time zone");
 
@@ -89,6 +92,7 @@ namespace DreamDwellings.Migrations
                             HomeImage = "https://dhp.dreeshomes.com/cms/images/5vlwKrt_41I8s7yG-NZKFW?quality=80&width=1200",
                             HomeTypeId = 1,
                             ListedOn = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 450000,
                             Sold = false,
                             SquareFeet = 1500m,
                             StreetAddress = "123 Main St"
@@ -103,6 +107,7 @@ namespace DreamDwellings.Migrations
                             HomeImage = "https://dhp.dreeshomes.com/cms/images/D-TyO6d0q1L9l-S5Jg6Ouw?quality=80&width=1200",
                             HomeTypeId = 1,
                             ListedOn = new DateTime(2023, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 292000,
                             Sold = false,
                             SquareFeet = 2000m,
                             StreetAddress = "456 Elm St"
@@ -117,6 +122,7 @@ namespace DreamDwellings.Migrations
                             HomeImage = "https://nhs-dynamic-secure.akamaized.net/Images/Homes/Drees/69096216-230623.jpg?maxwidth=900&maxheight=600&format=jpg&progressive=true",
                             HomeTypeId = 1,
                             ListedOn = new DateTime(2023, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 399000,
                             Sold = false,
                             SquareFeet = 1800m,
                             StreetAddress = "789 Oak St"
@@ -131,6 +137,7 @@ namespace DreamDwellings.Migrations
                             HomeImage = "https://www.hersindex.com/wp-content/uploads/2020/04/Drees-Austin-Header-scaled.jpg",
                             HomeTypeId = 1,
                             ListedOn = new DateTime(2023, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 299000,
                             Sold = false,
                             SquareFeet = 2200m,
                             StreetAddress = "101 Pine St"
@@ -145,6 +152,7 @@ namespace DreamDwellings.Migrations
                             HomeImage = "https://www.dreeshomes.com/globalassets/production-ready/design---distinctive-design/lauren-ii-a_drees.jpg",
                             HomeTypeId = 1,
                             ListedOn = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 305000,
                             Sold = false,
                             SquareFeet = 1600m,
                             StreetAddress = "202 Maple St"
@@ -292,7 +300,7 @@ namespace DreamDwellings.Migrations
                         new
                         {
                             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
-                            ConcurrencyStamp = "b06cca7f-a610-4b79-ac12-5da3aebdce5d",
+                            ConcurrencyStamp = "a8defec4-c0d5-40b8-9984-80803333380a",
                             Name = "Admin",
                             NormalizedName = "admin"
                         });
@@ -391,13 +399,13 @@ namespace DreamDwellings.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7c84539c-6b67-4622-88d2-2f3d219fb727",
+                            ConcurrencyStamp = "e0a35d64-ff51-4644-b569-d7274deb87c9",
                             Email = "phil@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJmqBwEmSWsADo+bTxqr6gY14o0T1ddhhhDEw8cpUd9OcxV557MiUeyMv1tlu5hZlA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHX9hohnCocVFS8ywUPd2fZkf6QD5gzztv8vNJJuD/MXikpSghC9qoqa0O3lE4R7hw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "749381df-acb4-495c-8969-19510b35a032",
+                            SecurityStamp = "add298e2-41fe-4c70-8cde-55a0bfd2c731",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -522,7 +530,7 @@ namespace DreamDwellings.Migrations
             modelBuilder.Entity("DreamDwellings.Models.UserSave", b =>
                 {
                     b.HasOne("DreamDwellings.Models.Home", "Home")
-                        .WithMany()
+                        .WithMany("UserSaves")
                         .HasForeignKey("HomeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -587,6 +595,11 @@ namespace DreamDwellings.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DreamDwellings.Models.Home", b =>
+                {
+                    b.Navigation("UserSaves");
                 });
 
             modelBuilder.Entity("DreamDwellings.Models.UserProfile", b =>
