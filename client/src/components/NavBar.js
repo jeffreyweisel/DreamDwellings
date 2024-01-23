@@ -1,58 +1,74 @@
 import { useState } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
-Button,
-Collapse,
-Nav,
-NavLink,
-NavItem,
-Navbar,
-NavbarBrand,
-NavbarToggler,
+  Button,
+  Collapse,
+  Nav,
+  NavLink,
+  NavItem,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
 } from "reactstrap";
-import { logout } from "../managers/authManager";
+import { logout } from "../DataManagers/authManager";
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-const toggleNavbar = () => setOpen(!open);
+  const toggleNavbar = () => setOpen(!open);
 
-return (
+  return (
     <div>
-    <Navbar color="light" light fixed="true" expand="lg">
+      <Navbar color="light" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        Dream Dwellings 🏡🏠
+          Welcome back, {loggedInUser.firstName}!
         </NavbarBrand>
         {loggedInUser ? (
-        <>
+          <>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
-            <Nav navbar></Nav>
+              <Nav className="mx-auto" navbar>
+                <NavItem onClick={() => setOpen(false)} className="mr-5">
+                  <NavLink tag={RRNavLink} to="/homes">
+                    For Sale
+                  </NavLink>
+                </NavItem>
+                <NavItem onClick={() => setOpen(false)} className="mr-2">
+                  <NavLink tag={RRNavLink} to="/empty">
+                    My Homes
+                  </NavLink>
+                </NavItem>
+                <NavItem onClick={() => setOpen(false)}>
+                  <NavLink tag={RRNavLink} to="/empty">
+                    Saved
+                  </NavLink>
+                </NavItem>
+              </Nav>
             </Collapse>
             <Button
-            color="primary"
-            onClick={(e) => {
+              color="primary"
+              onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);
                 logout().then(() => {
-                setLoggedInUser(null);
-                setOpen(false);
+                  setLoggedInUser(null);
+                  setOpen(false);
                 });
-            }}
+              }}
             >
-            Logout
+              Logout
             </Button>
-        </>
+          </>
         ) : (
-        <Nav navbar>
+          <Nav navbar>
             <NavItem>
-            <NavLink tag={RRNavLink} to="/login">
+              <NavLink tag={RRNavLink} to="/login">
                 <Button color="primary">Login</Button>
-            </NavLink>
+              </NavLink>
             </NavItem>
-        </Nav>
+          </Nav>
         )}
-    </Navbar>
+      </Navbar>
     </div>
-);
+  );
 }
