@@ -20,8 +20,10 @@ export default function HomeList() {
         </Link> */}
       </div>
       <div className="d-flex flex-wrap">
-      {homes.map((home) => (
-        <Card key={`home-${home.id}`} style={{ width: '27rem' }} >
+      {homes
+      .filter((h) => h.userProfileId === null)
+      .map((home) => (
+        <Card key={`home-${home.id}`} style={{ width: '20rem' }} >
           <CardImg
             variant="top"
             src={home.homeImage}

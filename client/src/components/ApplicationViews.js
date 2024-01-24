@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import HomeList from "./tickets/HomeList";
 import HomeDetails from "./tickets/HomeDetails";
 import Home from "./tickets/Home";
+import UserHomes from "./tickets/UserHomes";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -44,6 +45,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             }
           />
         </Route>
+        <Route
+            path="userhomes"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <UserHomes loggedInUser={loggedInUser}/>
+              </AuthorizedRoute>
+            }
+          />
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}
