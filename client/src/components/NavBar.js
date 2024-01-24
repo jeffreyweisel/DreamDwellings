@@ -21,10 +21,10 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
     <div>
       <Navbar color="light" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-          Welcome back, {loggedInUser.firstName}!
         </NavbarBrand>
         {loggedInUser ? (
-          <>
+            <>
+            Welcome back, {loggedInUser.firstName}!
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
               <Nav className="mx-auto" navbar>

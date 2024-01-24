@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, CardBody, CardText, CardTitle, CardImg } from "reactstrap";
+import { Card, CardBody, CardText, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getHomes } from "../../DataManagers/homeManager";
 
@@ -21,7 +21,7 @@ export default function HomeList() {
       </div>
       <div className="d-flex flex-wrap">
       {homes.map((home) => (
-        <Card key={`home-${home.id}`} style={{ width: '25rem' }} >
+        <Card key={`home-${home.id}`} style={{ width: '27rem' }} >
           <CardImg
             variant="top"
             src={home.homeImage}
