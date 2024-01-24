@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
-import { Card, CardBody, CardImg, CardText } from "reactstrap";
-import { getHomes } from "../../DataManagers/homeManager";
-import { Link } from "react-router-dom";
+import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
+import { getHomes, listHome } from "../../DataManagers/homeManager";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UserHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
-
-  console.log("loggedInUser in userhomes:", loggedInUser);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     getHomes().then(setHomes);
   }, []);
+
+  const handleHomeListingClick = (id) => {
+    listHome(id).then(() => {
+      navigate('/homes')
+    })
+  }
 
   return (
     <>
@@ -20,6 +26,7 @@ export default function UserHomes({ loggedInUser }) {
             .filter((h) => h.userProfileId === loggedInUser.id)
             .map((home) => (
               <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
+               
                 <CardImg
                   variant="top"
                   src={home.homeImage}
@@ -27,6 +34,10 @@ export default function UserHomes({ loggedInUser }) {
                   className="img-fluid"
                 />
                 <CardBody>
+                <Button
+                onClick={() => handleHomeListingClick(home.id)}
+                >List Home For Sale!
+                </Button>
                   <CardText>
                     <strong>${home.price.toLocaleString("en-US")}</strong>
                     <br />
@@ -37,8 +48,9 @@ export default function UserHomes({ loggedInUser }) {
                     {home.streetAddress}, {home.city}, TN
                   </CardText>
                   <small className="text-muted">
-                    <Link to={`${home.id}`}>Details</Link>
+                  <Link to={`/homes/${home.id}`}>Details</Link>
                   </small>
+                  
                 </CardBody>
               </Card>
             ))}

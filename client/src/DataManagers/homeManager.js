@@ -39,3 +39,11 @@ export const purchaseHome = (homeId, userId) => {
     method: "PUT",
   });
 };
+
+// List home that user owns for sale
+// Purchase a home
+export const listHome = (homeId) => {
+  return fetch(`${apiUrl}/${homeId}/list`, {
+    method: "PUT",
+  });
+};

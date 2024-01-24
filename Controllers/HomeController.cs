@@ -269,4 +269,23 @@ public class HomeController : ControllerBase
         }
         return NoContent();
     }
+
+    // List home user owns for sale
+    [HttpPut("{id}/list")]
+    public IActionResult ListHome([FromRoute] int id)
+    {
+        Home homeToUpdate = _dbContext.Homes.SingleOrDefault(h => h.Id == id);
+        if (homeToUpdate == null)
+        {
+            return NotFound();
+        }
+        // Mark the home as sold
+        homeToUpdate.Sold = false;
+        homeToUpdate.PurchasedOn = null;
+        homeToUpdate.UserProfileId = null;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }

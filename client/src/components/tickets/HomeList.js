@@ -11,9 +11,6 @@ export default function HomeList() {
     console.log(homes);
   }, []);
 
-  const handleSaveButtonClick = () => {
-
-  }
 
   return (
     <div className="container mt-4">

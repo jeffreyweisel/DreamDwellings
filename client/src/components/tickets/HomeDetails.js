@@ -52,14 +52,16 @@ export default function HomeDetails({loggedInUser}) {
           <strong>Beds:</strong> {home.bedNumber} | <strong>Baths:</strong> {home.bathNumber}<br />
           <strong>Description:</strong> {home.description}
         </CardText>
-        <Button 
-        onClick={() => handleSaveButtonClick(home.id)}
-        >
-          Save
-          </Button>
-          <Button 
-          onClick={()=> handleHomePurchaseClick(home.id, loggedInUser.id)}
-          variant="primary">Purchase Home!</Button>{' '}
+        {home.sold === false && (
+          <>
+            <Button onClick={() => handleSaveButtonClick(home.id)}>
+              Save
+            </Button>
+            <Button onClick={() => handleHomePurchaseClick(home.id, loggedInUser.id)} variant="primary">
+              Purchase Home!
+            </Button>{' '}
+          </>
+        )}
       </CardBody>
     </Card>
   );
