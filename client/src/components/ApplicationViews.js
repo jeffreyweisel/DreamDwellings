@@ -7,6 +7,7 @@ import HomeDetails from "./tickets/HomeDetails";
 import Home from "./tickets/Home";
 import UserHomes from "./tickets/UserHomes";
 import UserSavedHomes from "./tickets/UserSavedHomes";
+import CreateNewHomeForm from "./tickets/CreateNewHome";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -41,7 +42,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path="create"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <>Nothing here yet</>
+                <CreateNewHomeForm />
               </AuthorizedRoute>
             }
           />

@@ -3,7 +3,6 @@ import { Card, CardBody, CardText, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getHomes } from "../../DataManagers/homeManager";
 
-
 export default function HomeList() {
   const [homes, setHomes] = useState([]);
 
@@ -14,34 +13,36 @@ export default function HomeList() {
 
   return (
     <div className="container mt-4">
-      <div className="sub-menu bg-light d-flex">
-        {/* <Link to="/homes/create" className="ml-2">
+      <div className="sub-menu  d-flex">
+        <Link to="/homes/create" className="ml-2">
           Add
-        </Link> */}
+        </Link>
       </div>
       <div className="d-flex flex-wrap">
-      {homes
-      .filter((h) => h.userProfileId === null)
-      .map((home) => (
-        <Card key={`home-${home.id}`} style={{ width: '20rem' }} >
-          <CardImg
-            variant="top"
-            src={home.homeImage}
-            alt="homeimg"
-            className="img-fluid"
-          />
-          <CardBody>
-            <CardText>
-              <strong>Price:</strong> ${home.price} <br />
-              <strong>Address:</strong> {home.streetAddress}, {home.city}, TN <br />
-            </CardText>
-            <small className="text-muted">
-              <Link to={`${home.id}`}>Details</Link>
-            </small>
-          </CardBody>
-        </Card>
-      ))}
-    </div>
+        {homes
+          .filter((h) => h.userProfileId === null)
+          .map((home) => (
+            <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
+              <CardImg
+                variant="top"
+                src={home.homeImage}
+                alt="homeimg"
+                className="img-fluid"
+              />
+              <CardBody>
+                <CardText>
+                  <br />
+                  <strong>Address:</strong> {home.streetAddress}, {home.city},
+                  TN <br />
+                  <strong>Price:</strong> ${home.price}
+                </CardText>
+                <small className="text-muted">
+                  <Link to={`${home.id}`}>Details</Link>
+                </small>
+              </CardBody>
+            </Card>
+          ))}
+      </div>
     </div>
   );
 }
