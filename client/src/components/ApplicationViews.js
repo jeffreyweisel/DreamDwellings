@@ -6,6 +6,7 @@ import HomeList from "./tickets/HomeList";
 import HomeDetails from "./tickets/HomeDetails";
 import Home from "./tickets/Home";
 import UserHomes from "./tickets/UserHomes";
+import UserSavedHomes from "./tickets/UserSavedHomes";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -50,6 +51,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <UserHomes loggedInUser={loggedInUser}/>
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="usersaves"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <UserSavedHomes loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />

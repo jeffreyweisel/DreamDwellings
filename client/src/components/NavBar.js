@@ -39,7 +39,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                   </NavLink>
                 </NavItem>
                 <NavItem onClick={() => setOpen(false)}>
-                  <NavLink tag={RRNavLink} to="/empty">
+                  <NavLink tag={RRNavLink} to="/usersaves">
                     Saved
                   </NavLink>
                 </NavItem>
