@@ -145,14 +145,35 @@ public class HomeController : ControllerBase
     // [Authorize]
     public IActionResult CreateHomeListing(Home home)
     {
-        home.ListedOn = DateTime.Today;
-        home.Sold = false;
-        home.PurchasedOn = null;
-        home.HomeOwner = null;
+        try
+        {
+            home.ListedOn = DateTime.Today;
+            home.Sold = false;
+            home.PurchasedOn = null;
+            home.HomeOwner = null;
 
-        _dbContext.Homes.Add(home);
-        _dbContext.SaveChanges();
-        return Created($"/api/home/{home.Id}", home);
+            _dbContext.Homes.Add(home);
+            _dbContext.SaveChanges();
+
+            return Created($"/api/home/{home.Id}", home);
+        }
+        catch (DbUpdateException ex)
+    {
+        // Log the exception details
+        Console.WriteLine("DbUpdateException Message: " + ex.Message);
+        Console.WriteLine("Inner Exception Message: " + ex.InnerException?.Message);
+        Console.WriteLine("StackTrace: " + ex.StackTrace);
+
+        return StatusCode(500, "Error creating home listing");
+    }
+    catch (Exception ex)
+    {
+        // Log any other exceptions
+        Console.WriteLine("Exception Message: " + ex.Message);
+        Console.WriteLine("StackTrace: " + ex.StackTrace);
+
+        return StatusCode(500, "Error creating home listing");
+    }
     }
 
     // Edit properties of a home
