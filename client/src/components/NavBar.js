@@ -43,6 +43,14 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                     Saved
                   </NavLink>
                 </NavItem>
+                {loggedInUser.roles.includes("Admin") && (
+                  <NavItem onClick={() => setOpen(false)}>
+                    <NavLink tag={RRNavLink} to="/listhome">
+                      List Home
+                    </NavLink>
+                  </NavItem>
+                  
+                )}
               </Nav>
             </Collapse>
             <Button

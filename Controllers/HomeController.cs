@@ -199,6 +199,7 @@ public class HomeController : ControllerBase
     }
 
     // Mark home as sold with userId query string param
+
     [HttpPut("{id}/sold")]
     public IActionResult SellHome([FromRoute] int id, [FromQuery] int userId)
     {
@@ -207,18 +208,10 @@ public class HomeController : ControllerBase
         {
             return NotFound();
         }
-        else if (id != userId)
-        {
-            return BadRequest();
-        }
-
         // Mark the home as sold
         homeToUpdate.Sold = true;
         homeToUpdate.PurchasedOn = DateTime.Today;
-
-        // Assign the buyer as the home owner
         homeToUpdate.UserProfileId = userId;
-        homeToUpdate.HomeOwner = _dbContext.UserProfiles.SingleOrDefault(u => u.Id == userId);
 
         _dbContext.SaveChanges();
 

@@ -17,11 +17,7 @@ export default function HomeList() {
 
   return (
     <div className="container mt-4">
-      <div className="sub-menu  d-flex">
-        <Link to="/homes/create" className="ml-2">
-          Add
-        </Link>
-      </div>
+
       <div className="d-flex flex-wrap">
         {homes
           .filter((h) => h.userProfileId === null)
