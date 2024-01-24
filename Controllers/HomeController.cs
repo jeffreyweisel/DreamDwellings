@@ -158,22 +158,22 @@ public class HomeController : ControllerBase
             return Created($"/api/home/{home.Id}", home);
         }
         catch (DbUpdateException ex)
-    {
-        // Log the exception details
-        Console.WriteLine("DbUpdateException Message: " + ex.Message);
-        Console.WriteLine("Inner Exception Message: " + ex.InnerException?.Message);
-        Console.WriteLine("StackTrace: " + ex.StackTrace);
+        {
+            // Log the exception details
+            Console.WriteLine("DbUpdateException Message: " + ex.Message);
+            Console.WriteLine("Inner Exception Message: " + ex.InnerException?.Message);
+            Console.WriteLine("StackTrace: " + ex.StackTrace);
 
-        return StatusCode(500, "Error creating home listing");
-    }
-    catch (Exception ex)
-    {
-        // Log any other exceptions
-        Console.WriteLine("Exception Message: " + ex.Message);
-        Console.WriteLine("StackTrace: " + ex.StackTrace);
+            return StatusCode(500, "Error creating home listing");
+        }
+        catch (Exception ex)
+        {
+            // Log any other exceptions
+            Console.WriteLine("Exception Message: " + ex.Message);
+            Console.WriteLine("StackTrace: " + ex.StackTrace);
 
-        return StatusCode(500, "Error creating home listing");
-    }
+            return StatusCode(500, "Error creating home listing");
+        }
     }
 
     // Edit properties of a home
@@ -243,5 +243,37 @@ public class HomeController : ControllerBase
         return NoContent();
     }
 
+    // Create a user save
+    [HttpPost("{id}/save")]
+    // [Authorize]
+    public IActionResult CreateUserSave(int id, [FromQuery] int userId)
+    {
+        _dbContext.UserSaves.Add(new UserSave
+        {
+            UserProfileId = userId,
+            HomeId = id
+        });
 
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    // Remove user save
+    [HttpPost("{id}/unsave")]
+    // [Authorize]
+    public IActionResult RemoveSave(int id, [FromQuery] int userId)
+    {
+        // Find and remove the ChoreAssignment record
+        var saveToRemove = _dbContext.UserSaves
+            .FirstOrDefault(usave => usave.HomeId == id && usave.UserProfileId == userId);
+
+        if (saveToRemove != null)
+        {
+            _dbContext.UserSaves.Remove(saveToRemove);
+            _dbContext.SaveChanges();
+            return NoContent();
+        }
+        return NoContent();
+    }
 }

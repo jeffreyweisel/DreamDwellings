@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
 import {
+  Button,
   Card,
   CardBody,
   CardImg,
   CardText,
 } from "reactstrap";
-import { getHomes } from "../../DataManagers/homeManager";
-import { Link } from "react-router-dom";
+import { getHomes, removeUserSave } from "../../DataManagers/homeManager";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function UserSavedHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
-
-  console.log("loggedInUser in userhomes:", loggedInUser);
+  const navigate = useNavigate()
+  
 
   useEffect(() => {
     getHomes().then(setHomes);
   }, []);
+
+  const handleUserUnsaveButton = (id) => {
+    console.log('Clicked Unsave with homeId:', id, 'and userId:', loggedInUser.id);
+    removeUserSave(id, loggedInUser.id).then(() => {
+      navigate('/homes')
+
+    })
+  }
 
   return (
     <div className="container mt-4">
@@ -45,6 +55,10 @@ export default function UserSavedHomes({ loggedInUser }) {
                   <Link to={`/homes/${home.id}`}>Details</Link>
                 </small>
               </CardBody>
+              < Button 
+               onClick={() => handleUserUnsaveButton(home.id)}
+              >Unsave
+                </Button>
             </Card>
           ))}
       </div>
