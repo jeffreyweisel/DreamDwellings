@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { createUserSave, getHome } from "../../DataManagers/homeManager";
+import { createUserSave, getHome, purchaseHome } from "../../DataManagers/homeManager";
 
 
 export default function HomeDetails({loggedInUser}) {
@@ -22,6 +22,16 @@ export default function HomeDetails({loggedInUser}) {
       navigate('/usersaves')
     })
   }
+
+  const handleHomePurchaseClick = (id, userId) => {
+  
+    purchaseHome(id, userId).then(() => {
+      navigate('/homes')
+    });
+  };
+  
+
+  
 
   return (
     <Card key={`home-${home.id}`} style={{ width: '20rem' }} className="mb-4">
@@ -47,6 +57,9 @@ export default function HomeDetails({loggedInUser}) {
         >
           Save
           </Button>
+          <Button 
+          onClick={()=> handleHomePurchaseClick(home.id, loggedInUser.id)}
+          variant="primary">Purchase Home!</Button>{' '}
       </CardBody>
     </Card>
   );

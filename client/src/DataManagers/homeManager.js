@@ -32,3 +32,10 @@ export const removeUserSave = (homeId, userId) => {
     method: "POST",
   });
 };
+
+// Purchase a home
+export const purchaseHome = (homeId, userId) => {
+  return fetch(`${apiUrl}/${homeId}/sold?userId=${userId}`, {
+    method: "PUT",
+  });
+};

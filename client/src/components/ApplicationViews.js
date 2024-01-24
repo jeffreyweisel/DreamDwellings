@@ -38,14 +38,6 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
-          <Route
-            path="create"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateNewHomeForm />
-              </AuthorizedRoute>
-            }
-          />
         </Route>
         <Route
             path="userhomes"
@@ -60,6 +52,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <UserSavedHomes loggedInUser={loggedInUser}/>
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="listhome"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreateNewHomeForm loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />
