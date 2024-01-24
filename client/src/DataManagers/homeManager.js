@@ -10,11 +10,25 @@ export const getHome = (id) => {
   return fetch(`${apiUrl}/${id}`).then((r) => r.json());
 };
 
-// Add new home to the system
+// Add new home to system
 export const addHome = (home) => {
   return fetch(apiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(home),
   }).then((res) => res.json());
+};
+
+// Add a user save to system
+export const createUserSave = (homeId, userId) => {
+  return fetch(`${apiUrl}/${homeId}/save?userId=${userId}`, {
+    method: "POST",
+  });
+};
+
+// Remove a user save
+export const removeUserSave = (homeId, userId) => {
+  return fetch(`${apiUrl}/${homeId}/unsave?userId=${userId}`, {
+    method: "POST",
+  });
 };

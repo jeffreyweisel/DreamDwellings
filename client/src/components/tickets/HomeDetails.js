@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { getHome } from "../../DataManagers/homeManager";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { createUserSave, getHome } from "../../DataManagers/homeManager";
 
 
-export default function HomeDetails() {
+export default function HomeDetails({loggedInUser}) {
   const { id } = useParams();
   const [home, setHome] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getHome(id).then(setHome);
@@ -16,8 +17,14 @@ export default function HomeDetails() {
     return null;
   }
 
+  const handleSaveButtonClick = (id) => {
+    createUserSave(id, loggedInUser.id).then(() => {
+      navigate('/usersaves')
+    })
+  }
+
   return (
-    <Card key={`home-${home.id}`} style={{ width: '60rem' }} className="mb-4">
+    <Card key={`home-${home.id}`} style={{ width: '20rem' }} className="mb-4">
       <CardImg
         variant="top"
         src={home.homeImage}
@@ -35,6 +42,11 @@ export default function HomeDetails() {
           <strong>Beds:</strong> {home.bedNumber} | <strong>Baths:</strong> {home.bathNumber}<br />
           <strong>Description:</strong> {home.description}
         </CardText>
+        <Button 
+        onClick={() => handleSaveButtonClick(home.id)}
+        >
+          Save
+          </Button>
       </CardBody>
     </Card>
   );
