@@ -9,7 +9,7 @@ import UserHomes from "./tickets/UserHomes";
 import UserSavedHomes from "./tickets/UserSavedHomes";
 import CreateNewHomeForm from "./tickets/CreateNewHome";
 
-export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
+export default function ApplicationViews({ loggedInUser, setLoggedInUser, home }) {
   return (
     <Routes>
       <Route path="/">
@@ -26,7 +26,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <HomeList />
+                <HomeList loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />

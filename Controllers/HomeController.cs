@@ -279,7 +279,7 @@ public class HomeController : ControllerBase
         {
             return NotFound();
         }
-        // Mark the home as sold
+        // Mark the home as unsold
         homeToUpdate.Sold = false;
         homeToUpdate.PurchasedOn = null;
         homeToUpdate.UserProfileId = null;
