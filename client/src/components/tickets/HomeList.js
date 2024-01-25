@@ -14,7 +14,6 @@ export default function HomeList() {
 
   return (
     <div className="container mt-4">
-
       <div className="d-flex flex-wrap">
         {homes
           .filter((h) => h.userProfileId === null)
@@ -24,15 +23,16 @@ export default function HomeList() {
                 variant="top"
                 src={home.homeImage}
                 alt="homeimg"
-                className="img-fluid"
+                
               />
               <CardBody>
                 <CardText>
-                <strong>${home.price.toLocaleString('en-US')}</strong>
+                <strong>${home.price.toLocaleString('en-US')}</strong> - {" "}
+                <small>{home.homeType.homeTypeName} for sale</small>
                  <br />
                   <strong>Beds:</strong> {home.bedNumber}  | {" "}
                   <strong>Baths:</strong> {home.bathNumber}  | {" "} 
-                  {home.squareFeet} sq ft
+                  <strong>{home.squareFeet}</strong> sq ft
                   <br />
                   {home.streetAddress}, {home.city},
                   TN

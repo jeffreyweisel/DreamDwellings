@@ -130,7 +130,7 @@ export default function CreateNewHomeForm() {
         <FormGroup>
           <Label htmlFor="price">Price:</Label>
           <Input
-            type="text"
+            type="number"
             placeholder="...."
             name="price"
             value={price}

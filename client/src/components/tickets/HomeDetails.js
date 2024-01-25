@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { createUserSave, getHome, purchaseHome } from "../../DataManagers/homeManager";
+import { createUserSave, deleteHome, getHome, purchaseHome } from "../../DataManagers/homeManager";
 
 
 export default function HomeDetails({loggedInUser}) {
   const { id } = useParams();
   const [home, setHome] = useState(null);
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,11 +25,18 @@ export default function HomeDetails({loggedInUser}) {
   }
 
   const handleHomePurchaseClick = (id, userId) => {
-  
     purchaseHome(id, userId).then(() => {
       navigate('/homes')
     });
   };
+
+  const handleDeleteClick = (id) => {
+    deleteHome(id).then(() => {
+      navigate('/homes')
+    });
+  };
+
+  
   
 
   
@@ -36,10 +44,10 @@ export default function HomeDetails({loggedInUser}) {
   return (
     <Card key={`home-${home.id}`} style={{ width: '20rem' }} className="mb-4">
       <CardImg
-        variant="top"
+        top
         src={home.homeImage}
         alt="homeimg"
-        className="img-fluid"
+        width="100%"
       />
       <CardBody>
         <CardTitle className="h5">
@@ -60,6 +68,9 @@ export default function HomeDetails({loggedInUser}) {
             <Button onClick={() => handleHomePurchaseClick(home.id, loggedInUser.id)} variant="primary">
               Purchase Home!
             </Button>{' '}
+            <Button onClick={() => handleDeleteClick(home.id)}>
+              Delete
+            </Button>
           </>
         )}
       </CardBody>

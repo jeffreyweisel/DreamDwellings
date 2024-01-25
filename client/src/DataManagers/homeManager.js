@@ -41,9 +41,22 @@ export const purchaseHome = (homeId, userId) => {
 };
 
 // List home that user owns for sale
-// Purchase a home
 export const listHome = (homeId) => {
   return fetch(`${apiUrl}/${homeId}/list`, {
     method: "PUT",
+  });
+};
+
+// Edit the price of a home
+export const editHome = (homeId) => {
+  return fetch(`${apiUrl}/${homeId}`, {
+    method: "PUT",
+  });
+};
+
+// Delete home from database
+export const deleteHome = (homeId) => {
+  return fetch(`${apiUrl}/${homeId}`, {
+    method: "DELETE",
   });
 };
