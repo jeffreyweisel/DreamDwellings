@@ -35,18 +35,18 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                 </NavItem>
                 <NavItem onClick={() => setOpen(false)} className="mr-2">
                   <NavLink tag={RRNavLink} to="/userhomes">
-                    My Homes
+                    My Properties
                   </NavLink>
                 </NavItem>
                 <NavItem onClick={() => setOpen(false)}>
                   <NavLink tag={RRNavLink} to="/usersaves">
-                    Saved
+                    Saved Properties
                   </NavLink>
                 </NavItem>
                 {loggedInUser.roles.includes("Admin") && (
                   <NavItem onClick={() => setOpen(false)}>
                     <NavLink tag={RRNavLink} to="/listhome">
-                      List Home
+                      Create Listing
                     </NavLink>
                   </NavItem>
                   

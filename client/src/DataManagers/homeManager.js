@@ -48,11 +48,17 @@ export const listHome = (homeId) => {
 };
 
 // Edit the price of a home
-export const editHome = (homeId) => {
+export const editHome = (homeId, editedPrice) => {
   return fetch(`${apiUrl}/${homeId}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ Id: homeId, Price: editedPrice }),
   });
 };
+
+
 
 // Delete home from database
 export const deleteHome = (homeId) => {
