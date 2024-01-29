@@ -31,4 +31,11 @@ public class HomeDTO
     public string? Description { get; set; }
     public List<UserSaveDTO>? UserSaves { get; set; }
     public int Price { get; set; }
+     public int DaysOnMarket
+    {
+        get
+        {
+            return (DateTime.Today - ListedOn).Days;
+        }
+    }
 }

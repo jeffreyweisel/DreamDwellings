@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useNavigate } from "react-router-dom/dist";
 import { addHome } from "../../DataManagers/homeManager";
+import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 
 export default function CreateNewHomeForm() {
   const navigate = useNavigate();
 
+  const [homeTypes, setHomeTypes] = useState([]);
 
   const [homeImage, setHomeImage] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
@@ -13,12 +15,14 @@ export default function CreateNewHomeForm() {
   const [squarefeet, setSquareFeet] = useState("");
   const [bedNumber, setBedNumber] = useState("");
   const [bathNumber, setBathNumber] = useState("");
-  const [description, setDescription] = useState("")
-  const [price, setPrice] = useState("")
-  const [homeTypeId, setHomeTypeId] = useState("")
-  
-  
-  
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [homeTypeId, setHomeTypeId] = useState("");
+
+  useEffect(() => {
+    getHomeTypes().then(setHomeTypes);
+    console.log(homeTypes);
+  }, []);
 
   const submit = () => {
     const newHome = {
@@ -30,24 +34,23 @@ export default function CreateNewHomeForm() {
       bathNumber,
       description,
       price,
-      homeTypeId
+      homeTypeId,
     };
 
     addHome(newHome).then(() => {
-        console.log(newHome)
+      console.log(newHome);
       navigate("/homes");
     });
   };
 
   return (
     <div className="container">
-      <h4>Add New Home Listing!</h4>
-      <Form>
+      <h4 className="mb-4">Add New Home Listing!</h4>
+      <Form className="d-flex flex-wrap">
         <FormGroup>
-          <Label htmlFor="homeImage">Home Image URL:</Label>
+          <Label htmlFor="homeImage">Image:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="homeImage"
             value={homeImage}
             onChange={(e) => {
@@ -55,11 +58,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="streetAddress">Street Address:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="streetAddress"
             value={streetAddress}
             onChange={(e) => {
@@ -67,11 +69,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="city">City:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="city"
             value={city}
             onChange={(e) => {
@@ -79,11 +80,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="sqaureFeeet">Square Feet:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="squareFeet"
             value={squarefeet}
             onChange={(e) => {
@@ -91,11 +91,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="bedNumber">Beds:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="bedNumber"
             value={bedNumber}
             onChange={(e) => {
@@ -103,11 +102,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="bathNumber">Baths:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="bathNumber"
             value={bathNumber}
             onChange={(e) => {
@@ -115,11 +113,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="description">Description:</Label>
           <Input
             type="text"
-            placeholder="...."
             name="description"
             value={description}
             onChange={(e) => {
@@ -127,11 +124,10 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="mr-4 flex-grow-1">
           <Label htmlFor="price">Price:</Label>
           <Input
             type="number"
-            placeholder="...."
             name="price"
             value={price}
             onChange={(e) => {
@@ -139,20 +135,26 @@ export default function CreateNewHomeForm() {
             }}
           />
         </FormGroup>
-        <FormGroup>
-          <Label htmlFor="homeTypeId">Home Type:</Label>
+        <FormGroup className="mr-4 flex-grow-1">
+          <Label htmlFor="homeTypeId">Type of Home</Label>
           <Input
-            type="text"
-            placeholder="...."
+            type="select"
             name="homeTypeId"
             value={homeTypeId}
             onChange={(e) => {
               setHomeTypeId(parseInt(e.target.value));
             }}
-          />
+          >
+            <option value="0"></option>
+            {homeTypes.map((ht) => (
+              <option value={ht.id}>{ht.homeTypeName}</option>
+            ))}
+          </Input>
         </FormGroup>
-        <Button onClick={submit}>Submit</Button>
       </Form>
+      <Button color="primary" className="mr-4" onClick={submit}>
+        Submit
+      </Button>
     </div>
   );
 }

@@ -17,28 +17,24 @@ export const login = (email, password) => {
 };
 
 export const logout = () => {
-  return fetch(_apiUrl + "/logout")
-    .then((res) => {
-      if (!res.ok) {
-        // Handle error response, log, or throw an error
-        throw new Error(`Logout failed with status: ${res.status}`);
-      }
-    });
+  return fetch(_apiUrl + "/logout").then((res) => {
+    if (!res.ok) {
+      // Handle error response, log, or throw an error
+      throw new Error(`Logout failed with status: ${res.status}`);
+    }
+  });
 };
-
 
 export const tryGetLoggedInUser = () => {
-  return fetch(_apiUrl + "/me")
-    .then((res) => {
-      if (res.status === 401) {
-        return null;  // User is not authenticated
-      } else if (!res.ok) {
-        throw new Error(`Error fetching logged-in user: ${res.status}`);
-      }
-      return res.json();
-    });
+  return fetch(_apiUrl + "/me").then((res) => {
+    if (res.status === 401) {
+      return null; // User is not authenticated
+    } else if (!res.ok) {
+      throw new Error(`Error fetching logged-in user: ${res.status}`);
+    }
+    return res.json();
+  });
 };
-
 
 export const register = (userProfile) => {
   userProfile.password = btoa(userProfile.password);
