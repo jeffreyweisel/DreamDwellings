@@ -20,10 +20,9 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
   return (
     <div>
       <Navbar color="light" expand="lg">
-        <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        </NavbarBrand>
+        <NavbarBrand className="mr-auto" tag={RRNavLink} to="/"></NavbarBrand>
         {loggedInUser ? (
-            <>
+          <>
             Welcome back, {loggedInUser.firstName}!
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
@@ -49,7 +48,6 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                       Create Listing
                     </NavLink>
                   </NavItem>
-                  
                 )}
               </Nav>
             </Collapse>

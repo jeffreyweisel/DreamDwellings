@@ -19,7 +19,7 @@ public class HomeController : ControllerBase
         _dbContext = context;
     }
 
-    // Get all homes with the owners and user saves 
+    // Get all homes with the owner and user saves 
     public IActionResult Get()
     {
         return Ok(_dbContext
@@ -74,7 +74,7 @@ public class HomeController : ControllerBase
     }
 
 
-    // Get homes by Id with home owners and user save properties included
+    // Get homes by Id with home owner and user save properties included
     [HttpGet("{id}")]
     // [Authorize]
     public IActionResult GetHomeById(int id)
@@ -176,7 +176,7 @@ public class HomeController : ControllerBase
         }
     }
 
-    // Edit properties of a home
+    // Edit price of a home
     // had to create a new DTO because server was expecting all other properties to be included in body
     [HttpPut("{id}")]
     //[Authorize]

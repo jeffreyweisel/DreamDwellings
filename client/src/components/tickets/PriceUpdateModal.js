@@ -9,11 +9,12 @@ import {
 } from "reactstrap";
 
 export default function PriceUpdateModal({
+  // props passed to component from details
   isOpen,
   toggleModal,
   currentPrice,
   onSubmit,
-  setEditedPrice
+  setEditedPrice,
 }) {
   const [newPrice, setNewPrice] = useState(currentPrice);
 
@@ -24,12 +25,12 @@ export default function PriceUpdateModal({
   const handlePriceChange = (e) => {
     const newPriceValue = e.target.value;
     setNewPrice(newPriceValue);
-    setEditedPrice(newPriceValue); 
-    console.log(newPriceValue); 
+    setEditedPrice(newPriceValue);
+    console.log(newPriceValue);
   };
 
   const handleSubmit = () => {
-    console.log("New price to submit:", newPrice);
+    console.log("newPrice:", newPrice);
     onSubmit(newPrice);
     toggleModal();
   };
@@ -51,4 +52,3 @@ export default function PriceUpdateModal({
     </Modal>
   );
 }
-

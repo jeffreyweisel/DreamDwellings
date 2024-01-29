@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar";
 import ApplicationViews from "./components/ApplicationViews";
 import { tryGetLoggedInUser } from "./DataManagers/authManager";
 
-
 export default function App() {
   const [loggedInUser, setLoggedInUser] = useState();
 
@@ -16,7 +15,6 @@ export default function App() {
       setLoggedInUser(user);
     });
   }, []);
-  
 
   // wait to get a definite logged-in state before rendering
   if (loggedInUser === undefined) {

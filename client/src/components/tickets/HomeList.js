@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Card, CardBody, CardText, CardImg, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getHomes } from "../../DataManagers/homeManager";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeList() {
   const [homes, setHomes] = useState([]);
@@ -11,7 +13,6 @@ export default function HomeList() {
     console.log(homes);
   }, []);
 
-
   return (
     <div className="container mt-4">
       <div className="d-flex flex-wrap">
@@ -19,27 +20,26 @@ export default function HomeList() {
           .filter((h) => h.userProfileId === null)
           .map((home) => (
             <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
-              <CardImg
-                variant="top"
-                src={home.homeImage}
-                alt="homeimg"
-                
-              />
+              <Link to={`${home.id}`}>
+                <CardImg
+                  style={{ objectFit: "cover", height: "200px" }}
+                  variant="top"
+                  src={home.homeImage}
+                  alt="homeimg"
+                />
+              </Link>
               <CardBody>
                 <CardText>
-                <strong>${home.price.toLocaleString('en-US')}</strong> - {" "}
-                <small>{home.homeType.homeTypeName} for sale</small>
-                 <br />
-                  <strong>Beds:</strong> {home.bedNumber}  | {" "}
-                  <strong>Baths:</strong> {home.bathNumber}  | {" "} 
-                  <strong>{home.squareFeet}</strong> sq ft
+                  <strong>${home.price.toLocaleString("en-US")}</strong> -{" "}
+                  <small>{home.homeType.homeTypeName} for sale</small>
                   <br />
-                  {home.streetAddress}, {home.city},
-                  TN
+                  <strong>{home.bedNumber}</strong> bds |{" "}
+                  <strong>{home.bathNumber}</strong> ba |{" "}
+                  <strong>{home.squareFeet}</strong> sqft
+                  <br />
+                  <FontAwesomeIcon icon={faLocationDot} /> {home.streetAddress}, {home.city}, TN
                 </CardText>
-                <small className="text-muted">
-                  <Link to={`${home.id}`}>Details</Link>
-                </small>
+                <br />
               </CardBody>
             </Card>
           ))}

@@ -58,11 +58,11 @@ export const editHome = (homeId, editedPrice) => {
   });
 };
 
-
-
 // Delete home from database
 export const deleteHome = (homeId) => {
   return fetch(`${apiUrl}/${homeId}`, {
     method: "DELETE",
   });
 };
+
+// Get home types

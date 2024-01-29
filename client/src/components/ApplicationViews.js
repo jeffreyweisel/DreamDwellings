@@ -9,7 +9,10 @@ import UserHomes from "./tickets/UserHomes";
 import UserSavedHomes from "./tickets/UserSavedHomes";
 import CreateNewHomeForm from "./tickets/CreateNewHome";
 
-export default function ApplicationViews({ loggedInUser, setLoggedInUser, home }) {
+export default function ApplicationViews({
+  loggedInUser,
+  setLoggedInUser,
+}) {
   return (
     <Routes>
       <Route path="/">
@@ -40,29 +43,29 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser, home }
           />
         </Route>
         <Route
-            path="userhomes"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <UserHomes loggedInUser={loggedInUser}/>
-              </AuthorizedRoute>
-            }
-          />
-          <Route
-            path="usersaves"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <UserSavedHomes loggedInUser={loggedInUser}/>
-              </AuthorizedRoute>
-            }
-          />
-          <Route
-            path="listhome"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateNewHomeForm loggedInUser={loggedInUser}/>
-              </AuthorizedRoute>
-            }
-          />
+          path="userhomes"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <UserHomes loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="usersaves"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <UserSavedHomes loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="listhome"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <CreateNewHomeForm loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}

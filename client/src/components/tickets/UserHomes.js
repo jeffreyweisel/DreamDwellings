@@ -2,55 +2,50 @@ import { useEffect, useState } from "react";
 import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
 import { getHomes, listHome } from "../../DataManagers/homeManager";
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function UserHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     getHomes().then(setHomes);
   }, []);
 
-  const handleHomeListingClick = (id) => {
-    listHome(id).then(() => {
-      navigate('/homes')
-    })
-  }
+  //${home.price.toLocaleString('en-US')}
 
   return (
     <>
       <div className="container mt-4">
-        <div className="sub-menu bg-light d-flex">
+        <div className="d-flex flex-wrap">
           {homes
             .filter((h) => h.userProfileId === loggedInUser.id)
             .map((home) => (
               <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
-               
+                <Link to={`/homes/${home.id}`}>
                 <CardImg
+                  style={{ objectFit: "cover", height: "200px" }}
                   variant="top"
                   src={home.homeImage}
                   alt="homeimg"
-                  className="img-fluid"
                 />
+                </Link>
                 <CardBody>
-                <Button
-                onClick={() => handleHomeListingClick(home.id)}
-                >List Home For Sale!
-                </Button>
                   <CardText>
-                    <strong>${home.price.toLocaleString("en-US")}</strong>
+                    <strong>
+                    <FontAwesomeIcon icon={faCalendarCheck} /> Purchased on{" "}
+                      {new Date(home.purchasedOn).toLocaleDateString("en-US")}
+                    </strong>{" "}
                     <br />
-                    <strong>Beds:</strong> {home.bedNumber} |{" "}
-                    <strong>Baths:</strong> {home.bathNumber} |{" "}
-                    {home.squareFeet} sq ft
                     <br />
-                    {home.streetAddress}, {home.city}, TN
+                    <strong>{home.bedNumber}</strong> bds |{" "}
+                    <strong>{home.bathNumber}</strong> ba |{" "}
+                    <strong>{home.squareFeet}</strong> sqft
+                    <br />
+                    <FontAwesomeIcon icon={faLocationDot} /> {home.streetAddress}, {home.city}, TN
                   </CardText>
-                  <small className="text-muted">
-                  <Link to={`/homes/${home.id}`}>Details</Link>
-                  </small>
-                  
+                 <br/>
                 </CardBody>
               </Card>
             ))}
