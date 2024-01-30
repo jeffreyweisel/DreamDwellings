@@ -23,7 +23,11 @@ import {
 } from "../../DataManagers/homeManager";
 import PriceUpdateModal from "./PriceUpdateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faTrash,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeDetails({ loggedInUser }) {
   const { id } = useParams();
@@ -102,7 +106,7 @@ export default function HomeDetails({ loggedInUser }) {
 
   // sell home that user owns
   const handleHomeListingClick = (id) => {
-    const confirm = window.confirm("Are you suuuuureeeee?");
+    const confirm = window.confirm("Are you sure you wnt to sell this home?");
     if (confirm) {
       listHome(id).then(() => {
         navigate("/userhomes");
@@ -171,10 +175,12 @@ export default function HomeDetails({ loggedInUser }) {
                     !home.userSaves.some(
                       (save) => save.userProfileId === loggedInUser.id
                     ) && (
-                      <Button color="danger" onClick={() => handleSaveButtonClick(home.id)}>
-                      <FontAwesomeIcon icon={faHeart} /> Save
-                    </Button>
-                    
+                      <Button
+                        color="danger"
+                        onClick={() => handleSaveButtonClick(home.id)}
+                      >
+                        <FontAwesomeIcon icon={faHeart} /> Save
+                      </Button>
                     )}
                   <Button
                     onClick={() =>
