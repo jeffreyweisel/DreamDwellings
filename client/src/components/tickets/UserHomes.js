@@ -22,7 +22,7 @@ export default function UserHomes({ loggedInUser }) {
           {homes
             .filter((h) => h.userProfileId === loggedInUser.id)
             .map((home) => (
-              <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
+              <Card key={`home-${home.id}`} style={{ width: "20rem", margin: '2px' }}>
                 <Link to={`/homes/${home.id}`}>
                 <CardImg
                   style={{ objectFit: "cover", height: "200px" }}
