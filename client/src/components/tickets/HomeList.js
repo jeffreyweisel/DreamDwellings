@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardImg
-} from "reactstrap";
+import { Card, CardBody, CardText, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getHomes } from "../../DataManagers/homeManager";
+import {
+  createUserSave,
+  getHomes,
+  removeUserSave,
+} from "../../DataManagers/homeManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 import HomeFilterBar from "./HomeFilterBar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function HomeList() {
+
+export default function HomeList({ loggedInUser }) {
+
   const [homes, setHomes] = useState([]);
   const [filteredHomes, setFilteredHomes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,14 +29,18 @@ export default function HomeList() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  // On render state
-  useEffect(() => {
+  const getData = () => {
     getHomes().then((hArray) => {
       setHomes(hArray);
       setFilteredHomes(hArray);
     });
     getHomeTypes().then(setHomeTypes);
     console.log(homes);
+  }
+
+  // On render state
+  useEffect(() => {
+    getData();
   }, []);
 
   // Filtered State
@@ -91,6 +102,31 @@ export default function HomeList() {
     setFilteredHomes(homes);
   };
 
+  // handles the user save and user unsave
+  const toggleUserSave = async (event, home) => {
+    event.preventDefault();
+  
+    const userSavedHome = home.userSaves.find(
+      (save) => save.userProfileId === loggedInUser.id
+    );
+  
+    if (userSavedHome) {
+      // If saved, show remove message
+      toast.error('Home removed from your saved properties');
+      await removeUserSave(home.id, loggedInUser.id);
+      const updatedHomes = getHomes();
+      getData(updatedHomes);
+    } else {
+      // If not saved, show add message
+      toast.success("Home added to your saved properties. You can now view it there.");
+      const newSave = await createUserSave(home.id, loggedInUser.id);
+      const updatedHomes = homes.map((h) =>
+        h.id === home.id ? { ...h, userSaves: [...h.userSaves, newSave] } : h
+      );
+      getData(updatedHomes);
+    }
+  };
+
   return (
     <div className="container mt-4">
       <HomeFilterBar
@@ -122,6 +158,18 @@ export default function HomeList() {
                   src={home.homeImage}
                   alt="homeimg"
                 />
+                <div
+                  style={{
+                    color: 'white',
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    zIndex: 1,
+                  }}
+                  onClick={(event) => toggleUserSave(event, home)}
+                >
+                  <FontAwesomeIcon icon={home.userSaves && !home.userSaves.some((save) => save.userProfileId === loggedInUser.id) ? outlineHeart : solidHeart} size="2x" />
+                </div>
               </Link>
               <CardBody>
                 <CardText>

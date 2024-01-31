@@ -58,16 +58,16 @@ export default function HomeDetails({ loggedInUser }) {
   };
 
   // save button click
-  const handleSaveButtonClick = (id) => {
-    const confirm = window.confirm(
-      "Home added to your saved properties. You can now view it there. "
-    );
-    if (confirm) {
-      createUserSave(id, loggedInUser.id).then(() => {
-        navigate("/usersaves");
-      });
-    }
-  };
+  // const handleSaveButtonClick = (id) => {
+  //   const confirm = window.confirm(
+  //     "Home added to your saved properties. You can now view it there. "
+  //   );
+  //   if (confirm) {
+  //     createUserSave(id, loggedInUser.id).then(() => {
+  //       navigate("/usersaves");
+  //     });
+  //   }
+  // };
 
   // purchase home button click
   const handleHomePurchaseClick = (id, userId) => {
@@ -167,7 +167,7 @@ export default function HomeDetails({ loggedInUser }) {
                       />
                     </>
                   )}
-                  {home.userSaves &&
+                  {/* {home.userSaves &&
                     !home.userSaves.some(
                       (save) => save.userProfileId === loggedInUser.id
                     ) && (
@@ -175,7 +175,7 @@ export default function HomeDetails({ loggedInUser }) {
                       <FontAwesomeIcon icon={faHeart} /> Save
                     </Button>
                     
-                    )}
+                    )} */}
                   <Button
                     onClick={() =>
                       handleHomePurchaseClick(home.id, loggedInUser.id)
