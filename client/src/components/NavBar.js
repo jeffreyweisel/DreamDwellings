@@ -9,6 +9,7 @@ import {
   Navbar,
   NavbarBrand,
   NavbarToggler,
+  Container,
 } from "reactstrap";
 import { logout } from "../DataManagers/authManager";
 
@@ -18,15 +19,15 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
   const toggleNavbar = () => setOpen(!open);
 
   return (
-    <div>
-      <Navbar color="light" expand="lg">
+    <Container fluid>
+      <Navbar expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/"></NavbarBrand>
         {loggedInUser ? (
           <>
             Welcome back, {loggedInUser.firstName}!
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
-              <Nav className="mx-auto" navbar>
+              <Nav navbar className="mx-auto" style={{ padding: "5px", marginBottom: "5px" }}>
                 <NavItem onClick={() => setOpen(false)} className="mr-5">
                   <NavLink tag={RRNavLink} to="/homes">
                     For Sale
@@ -75,6 +76,6 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
           </Nav>
         )}
       </Navbar>
-    </div>
+    </Container>
   );
 }
