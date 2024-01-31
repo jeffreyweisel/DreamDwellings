@@ -8,19 +8,12 @@ import {
   Row,
   Col,
   Input,
-  FormGroup,
-  Label,
+  FormGroup
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getHomes } from "../../DataManagers/homeManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCircleXmark,
-  faLocationDot,
-  faMagnifyingGlass,
-  faX,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 
 export default function HomeList() {
@@ -33,6 +26,7 @@ export default function HomeList() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
+  // On render state
   useEffect(() => {
     getHomes().then((hArray) => {
       setHomes(hArray);
@@ -42,6 +36,7 @@ export default function HomeList() {
     console.log(homes);
   }, []);
 
+  // Filtered State
   useEffect(() => {
     let filteredHomesResult = homes;
 
@@ -90,19 +85,23 @@ export default function HomeList() {
     maxPrice,
   ]);
 
+  // Clears all filter inputs and resets to original state
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedHomeType("");
     setSelectedBedNumber("");
     setMinPrice("");
     setMaxPrice("");
-    // Reset to original state
     setFilteredHomes(homes);
   };
 
   return (
     <div className="container mt-4">
-      <div className="filter-bar">
+      {/* Search Bar */}
+      <div
+        className="filter-bar"
+        style={{ padding: "10px", marginBottom: "5px" }}
+      >
         <Row>
           <Col md="3" className="home-search">
             <div className="search-wrapper">
@@ -117,6 +116,7 @@ export default function HomeList() {
               />
             </div>
           </Col>
+          {/* Home Type Dropdown */}
           <Col md="3" className="home-search">
             <FormGroup>
               <Input
@@ -136,6 +136,7 @@ export default function HomeList() {
                 ))}
               </Input>
             </FormGroup>
+            {/* Bedroom number dropdown */}
           </Col>
           <Col md="2" className="home-search">
             <FormGroup>
@@ -156,6 +157,7 @@ export default function HomeList() {
               </Input>
             </FormGroup>
           </Col>
+          {/* Minimum Price Input */}
           <Col md="4" className="home-search">
             <Row>
               <Col>
@@ -167,6 +169,7 @@ export default function HomeList() {
                 />
               </Col>
               -
+              {/* Maximum Price Input */}
               <Col>
                 <Input
                   type="number"
@@ -175,11 +178,12 @@ export default function HomeList() {
                   onChange={(event) => setMaxPrice(event.target.value)}
                 />
               </Col>
+              {/* Clear filters button */}
               <Col>
-            <Button color="primary" onClick={clearFilters}>
-             <FontAwesomeIcon icon={faCircleXmark} /> Clear
-            </Button>
-          </Col>
+                <Button color="primary" onClick={clearFilters}>
+                  <FontAwesomeIcon icon={faCircleXmark} /> Clear
+                </Button>
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -188,7 +192,10 @@ export default function HomeList() {
         {filteredHomes
           .filter((h) => h.userProfileId === null)
           .map((home) => (
-            <Card key={`home-${home.id}`} style={{ width: "20rem" }}>
+            <Card
+              key={`home-${home.id}`}
+              style={{ width: "20rem", margin: "2px" }}
+            >
               <Link to={`${home.id}`}>
                 <CardImg
                   style={{ objectFit: "cover", height: "200px" }}
