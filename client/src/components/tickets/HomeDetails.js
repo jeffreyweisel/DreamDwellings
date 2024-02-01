@@ -25,8 +25,7 @@ import {
 
   faTrash,
   faCartShopping,
-  faX,
-  faXmark
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeDetails({ loggedInUser }) {
@@ -102,7 +101,7 @@ export default function HomeDetails({ loggedInUser }) {
     }
   };
 
-  // close details view and reruen to home list
+  // close details view and return to home list
   const handleCloseButtonClick = () => {
     navigate("/homes");
   };
@@ -181,12 +180,12 @@ export default function HomeDetails({ loggedInUser }) {
                     !home.userSaves.some(
                       (save) => save.userProfileId === loggedInUser.id
                     ) && (
-                      <Button
-                        color="danger"
-                        onClick={() => handleSaveButtonClick(home.id)}
-                      >
-                        <FontAwesomeIcon icon={faHeart} /> Save
-                      </Button>
+                      // <Button
+                      //   color="danger"
+                      //   onClick={() => handleSaveButtonClick(home.id)}
+                      // >
+                      //   <FontAwesomeIcon icon={faHeart} /> Save
+                      // </Button>
                     )}
                   <Button
                     onClick={() =>
