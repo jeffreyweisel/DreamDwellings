@@ -100,7 +100,7 @@ export default function HomeFilterBar({
             {/* Clear filters button */}
             <Col>
               <Button color="primary" onClick={clearFilters}>
-                <FontAwesomeIcon icon={faCircleXmark} /> Clear
+                <FontAwesomeIcon icon={faCircleXmark} /> Reset
               </Button>
             </Col>
           </Row>

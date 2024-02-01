@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
-  ButtonGroup,
-  Card,
   CardBody,
   CardImg,
   CardText,
   CardTitle,
   Col,
+  Container,
   FormGroup,
   Label,
   Row,
 } from "reactstrap";
 import {
-  createUserSave,
   deleteHome,
   editHome,
   getHome,
@@ -23,7 +21,12 @@ import {
 } from "../../DataManagers/homeManager";
 import PriceUpdateModal from "./PriceUpdateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faCartShopping,
+  faX,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeDetails({ loggedInUser }) {
   const { id } = useParams();
@@ -56,18 +59,6 @@ export default function HomeDetails({ loggedInUser }) {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  // save button click
-  // const handleSaveButtonClick = (id) => {
-  //   const confirm = window.confirm(
-  //     "Home added to your saved properties. You can now view it there. "
-  //   );
-  //   if (confirm) {
-  //     createUserSave(id, loggedInUser.id).then(() => {
-  //       navigate("/usersaves");
-  //     });
-  //   }
-  // };
 
   // purchase home button click
   const handleHomePurchaseClick = (id, userId) => {
@@ -110,25 +101,42 @@ export default function HomeDetails({ loggedInUser }) {
     }
   };
 
+  // close details view and reruen to home list
+  const handleCloseButtonClick = () => {
+    navigate("/homes");
+  };
+
   return (
-    <Card
+    <Container
       key={`home-${home.id}`}
       style={{ width: "100%", display: "flex" }}
-      className="mb-4"
+      className="mt-4"
     >
       <Row>
-        <Col md={4}>
+        <Col>
           <CardImg
             top
             src={home.homeImage}
             alt="homeimg"
-            style={{ width: "100%" }}
+            style={{ width: "600px", height: "400px" }}
           />
         </Col>
-        <Col md={8}>
+        <Col>
           <CardBody>
-            <CardTitle className="h5">
-              {home?.streetAddress}, {home?.city}, TN
+            <CardTitle
+              className="h5"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                {home?.streetAddress}, {home?.city}, TN
+              </div>
+              <div>
+                <FontAwesomeIcon icon={faXmark} onClick={handleCloseButtonClick} cursor='pointer'/>
+              </div>
             </CardTitle>
             <FormGroup>
               <Label
@@ -146,9 +154,10 @@ export default function HomeDetails({ loggedInUser }) {
               <strong>{home.bathNumber}</strong> ba |{" "}
               <strong>{home.squareFeet}</strong> sqft
               <br />
-              <strong>Description:</strong> {home?.description}
+              <strong>Description:</strong> {home?.description} <br />
+              <strong>Price per sqft:</strong> ${home.pricePerSqFt.toFixed(2)}
             </CardText>
-            <ButtonGroup>
+            <>
               {home.sold === false && (
                 <>
                   {loggedInUser.roles.includes("Admin") && (
@@ -167,15 +176,6 @@ export default function HomeDetails({ loggedInUser }) {
                       />
                     </>
                   )}
-                  {/* {home.userSaves &&
-                    !home.userSaves.some(
-                      (save) => save.userProfileId === loggedInUser.id
-                    ) && (
-                      <Button color="danger" onClick={() => handleSaveButtonClick(home.id)}>
-                      <FontAwesomeIcon icon={faHeart} /> Save
-                    </Button>
-                    
-                    )} */}
                   <Button
                     onClick={() =>
                       handleHomePurchaseClick(home.id, loggedInUser.id)
@@ -194,7 +194,7 @@ export default function HomeDetails({ loggedInUser }) {
                   Sell Home
                 </Button>
               )}
-            </ButtonGroup>
+            </>
             {home.sold !== true && (
               <div className="mt-5">
                 Days Listed: {home.daysOnMarket} | Saves:{" "}
@@ -204,6 +204,6 @@ export default function HomeDetails({ loggedInUser }) {
           </CardBody>
         </Col>
       </Row>
-    </Card>
+    </Container>
   );
 }

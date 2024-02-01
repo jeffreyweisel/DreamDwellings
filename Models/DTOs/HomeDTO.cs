@@ -38,4 +38,12 @@ public class HomeDTO
             return (DateTime.Today - ListedOn).Days;
         }
     }
+
+    public decimal PricePerSqFt 
+    {
+        get
+        {
+            return Price / SquareFeet;
+        }
+    }
 }

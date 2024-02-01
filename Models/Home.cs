@@ -9,17 +9,17 @@ public class Home
     public int Id { get; set; }
 
     [Url]
-     [BindNever]
+    [BindNever]
     public string HomeImage { get; set; }
-   [BindNever]
+    [BindNever]
     public string StreetAddress { get; set; }
-     [BindNever]
+    [BindNever]
     public string City { get; set; }
-   
+
     public decimal SquareFeet { get; set; }
-  
+
     public int BedNumber { get; set; }
-  
+
     public decimal BathNumber { get; set; }
     public DateTime ListedOn { get; set; }
     public DateTime? PurchasedOn { get; set; }
@@ -31,11 +31,22 @@ public class Home
     public string? Description { get; set; }
     public List<UserSave>? UserSaves { get; set; }
     public int Price { get; set; }
-     public int DaysOnMarket
+    // public decimal? LotSize { get; set; }
+    // public int? ZipCode { get; set; }
+    // public int? BuiltInYear { get; set; }
+    // public int? MyProperty { get; set; }
+    public int? DaysOnMarket
     {
         get
         {
             return (DateTime.Today - ListedOn).Days;
+        }
+    }
+    public decimal PricePerSqFt 
+    {
+        get
+        {
+            return Price / SquareFeet;
         }
     }
 }

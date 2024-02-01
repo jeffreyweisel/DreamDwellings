@@ -14,6 +14,7 @@ public class UserProfile
     public IdentityUser IdentityUser { get; set; }
     public List<Home>? OwnedHomes { get; set; }
     public List<UserSave>? SavedHomes { get; set; }
+    public string? ProfilePicture { get; set; }
     
 
 }

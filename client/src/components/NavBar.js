@@ -18,16 +18,33 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
 
   const toggleNavbar = () => setOpen(!open);
 
+  console.log(loggedInUser);
+
   return (
     <Container fluid>
       <Navbar expand="lg">
-        <NavbarBrand className="mr-auto" tag={RRNavLink} to="/"></NavbarBrand>
         {loggedInUser ? (
           <>
-            Welcome back, {loggedInUser.firstName}!
+            <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
+              <img
+                src={loggedInUser.profilePicture} 
+                alt="ProfilePicture"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%", 
+                  marginRight: "10px", 
+                }}
+              />
+              {loggedInUser.userName}
+            </NavbarBrand>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
-              <Nav navbar className="mx-auto" style={{ padding: "5px", marginBottom: "5px" }}>
+              <Nav
+                navbar
+                className="mx-auto"
+                style={{ padding: "5px", marginBottom: "5px" }}
+              >
                 <NavItem onClick={() => setOpen(false)} className="mr-5">
                   <NavLink tag={RRNavLink} to="/homes">
                     For Sale
@@ -70,7 +87,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
           <Nav navbar>
             <NavItem>
               <NavLink tag={RRNavLink} to="/login">
-                <Button color="primary">Login</Button>
+                {/* <Button color="primary">Login</Button> */}
               </NavLink>
             </NavItem>
           </Nav>

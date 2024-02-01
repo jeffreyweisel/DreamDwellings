@@ -17,6 +17,7 @@ public class UserProfileDTO
     public IdentityUser IdentityUser { get; set; }
     public List<HomeDTO> OwnedHomes { get; set; }
     public List<UserSaveDTO>? SavedHomes { get; set; }
+    public string? ProfilePicture { get; set; }
 
 
 }

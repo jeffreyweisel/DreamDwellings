@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "reactstrap";
+import HouseImg from '../../assets/houseimg.png'
 
 export default function Home() {
   const navigate = useNavigate();
@@ -16,8 +17,7 @@ export default function Home() {
   };
 
   const bannerStyle = {
-    backgroundImage:
-      'url("https://images.rawpixel.com/image_png_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV80X3Bob3RvX29mX2FfbW9kZXJuX2FyY2hpdGVjdHVyZV9idWlsZGluZ19pc29sYV84ODEwZmEwMS1hOTdhLTQ0MGQtYmUzNC1mMzEyZmMwN2Q0MTJfMS5wbmc.png")',
+    backgroundImage: `url(${HouseImg})`,
     backgroundSize: "cover",
     color: "black",
     height: "300px",
