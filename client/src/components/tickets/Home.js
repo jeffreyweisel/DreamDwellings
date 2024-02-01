@@ -6,6 +6,7 @@ import { Button, Container } from "reactstrap";
 import HouseImg from '../../assets/houseimg.png'
 
 export default function Home() {
+
   const navigate = useNavigate();
 
   const containerStyle = {
@@ -43,3 +44,4 @@ export default function Home() {
     </Container>
   );
 }
+
