@@ -24,7 +24,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faCartShopping,
-  faX,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -101,7 +100,7 @@ export default function HomeDetails({ loggedInUser }) {
     }
   };
 
-  // close details view and reruen to home list
+  // close details view and return to home list
   const handleCloseButtonClick = () => {
     navigate("/homes");
   };
