@@ -4,11 +4,9 @@ import {
   Button,
   CardBody,
   CardImg,
-  CardText,
   CardTitle,
   Col,
   Container,
-  FormGroup,
   Label,
   Row,
 } from "reactstrap";
@@ -25,13 +23,18 @@ import {
   faTrash,
   faCartShopping,
   faXmark,
+  faHouseChimney,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import Confetti from 'react-confetti';
+
 
 export default function HomeDetails({ loggedInUser }) {
   const { id } = useParams();
   const [home, setHome] = useState(null);
   const [editedPrice, setEditedPrice] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const navigate = useNavigate();
 
@@ -65,8 +68,12 @@ export default function HomeDetails({ loggedInUser }) {
       `You are about to purchase home at ${home.streetAddress} for $${home.price}. Congrats!`
     );
     if (confirm) {
+      setIsConfirmed(true);
       purchaseHome(id, userId).then(() => {
-        navigate("/userhomes");
+        setTimeout(() => {
+          setIsConfirmed(false);
+          navigate("/userhomes");
+        }, 3000);
       });
     }
   };
@@ -108,16 +115,19 @@ export default function HomeDetails({ loggedInUser }) {
   return (
     <Container
       key={`home-${home.id}`}
-      style={{ width: "100%", display: "flex" }}
+      style={{ width: "80%", display: "flex" }}
       className="mt-4"
     >
+      <div style={{ position: 'relative' }}>
+      {isConfirmed && <Confetti />}
+    </div>
       <Row>
         <Col>
           <CardImg
             top
             src={home.homeImage}
             alt="homeimg"
-            style={{ width: "600px", height: "400px" }}
+            style={{ width: "600px", height: "400px", borderRadius: "10px" }}
           />
         </Col>
         <Col>
@@ -128,78 +138,98 @@ export default function HomeDetails({ loggedInUser }) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                fontSize: "30px",
               }}
             >
               <div>
                 {home?.streetAddress}, {home?.city}, TN
               </div>
               <div>
-                <FontAwesomeIcon icon={faXmark} onClick={handleCloseButtonClick} cursor='pointer'/>
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  onClick={handleCloseButtonClick}
+                  cursor="pointer"
+                />
               </div>
             </CardTitle>
-            <FormGroup>
-              <Label
-                for="editedPrice"
-                onClick={openModal}
-                style={{ cursor: "pointer" }}
-              >
-                Price: ${home.price.toLocaleString("en-US")}
-              </Label>
-            </FormGroup>
-            <CardText>
-              {home.homeType.homeTypeName}
-              <br />
+            <div style={{ fontSize: "25px" }}>
               <strong>{home.bedNumber}</strong> bds |{" "}
               <strong>{home.bathNumber}</strong> ba |{" "}
               <strong>{home.squareFeet}</strong> sqft
               <br />
-              <strong>Description:</strong> {home?.description} <br />
-              <strong>Price per sqft:</strong> ${home.pricePerSqFt.toFixed(2)}
-            </CardText>
-            <>
-              {home.sold === false && (
-                <>
-                  {loggedInUser.roles.includes("Admin") && (
-                    <>
-                      <Button onClick={() => handleDeleteClick(home.id)}>
-                        <FontAwesomeIcon icon={faTrash} /> Delete
-                      </Button>
+            </div>
+            <div style={{ fontSize: "20px" }}>
+              <FontAwesomeIcon icon={faHouseChimney} />{" "}
+              {home.homeType.homeTypeName}
+            </div>
+            <br />
+            <Label
+              for="editedPrice"
+              style={{ fontSize: "18px", cursor: "pointer" }}
+              onClick={openModal}
+            >
+              Price: ${home.price.toLocaleString("en-US")}
+            </Label>
+            <br />
+            <strong>Description:</strong> {home?.description} <br />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginBottom: "0px",
+                justifyContent: "space-between",
+              }}
+            >
+              {home.sold !== true && (
+                <div className="mt-5">
+                <strong>{home.daysOnMarket} days </strong>on Dream Dwellings {" "} | {" "} <strong>{home.userSaves.length}</strong> saves
+                </div>
+              )}
+              <>
+                {home.sold === false && (
+                  <div style={{ alignSelf: "flex-end" }}>
+                    {loggedInUser.roles.includes("Admin") && (
+                      <>
+                        <Button
+                          className="mt-5"
+                          onClick={() => handleDeleteClick(home.id)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} /> Delete
+                        </Button>
 
-                      <PriceUpdateModal
-                        // pass props needed to the PriceUpdateModal
-                        isOpen={isModalOpen}
-                        toggleModal={closeModal}
-                        currentPrice={home.price}
-                        setEditedPrice={setEditedPrice}
-                        onSubmit={handleSubmitPriceChange}
-                      />
-                    </>
-                  )}
+                        <PriceUpdateModal
+                          // pass props needed to the PriceUpdateModal
+                          isOpen={isModalOpen}
+                          toggleModal={closeModal}
+                          currentPrice={home.price}
+                          setEditedPrice={setEditedPrice}
+                          onSubmit={handleSubmitPriceChange}
+                        />
+                      </>
+                    )}
+                    <Button
+                      className="mt-5"
+                      onClick={() =>
+                        handleHomePurchaseClick(home.id, loggedInUser.id)
+                      }
+                      color="primary"
+                    >
+                      <FontAwesomeIcon icon={faCartShopping} /> Purchase
+                    </Button>{" "}
+                  </div>
+                )}
+                {home.userProfileId === loggedInUser.id && (
                   <Button
-                    onClick={() =>
-                      handleHomePurchaseClick(home.id, loggedInUser.id)
-                    }
+                    className="mt-5"
+                    style={{ alignSelf: "flex-end" }}
                     color="primary"
+                    onClick={() => handleHomeListingClick(home.id)}
                   >
-                    <FontAwesomeIcon icon={faCartShopping} /> Purchase Home!
-                  </Button>{" "}
-                </>
-              )}
-              {home.userProfileId === loggedInUser.id && (
-                <Button
-                  color="primary"
-                  onClick={() => handleHomeListingClick(home.id)}
-                >
-                  Sell Home
-                </Button>
-              )}
-            </>
-            {home.sold !== true && (
-              <div className="mt-5">
-                Days Listed: {home.daysOnMarket} | Saves:{" "}
-                {home.userSaves.length}
-              </div>
-            )}
+                    <FontAwesomeIcon icon={faCircleCheck} /> Sell Home
+                  </Button>
+                )}
+              </>
+            </div>
           </CardBody>
         </Col>
       </Row>

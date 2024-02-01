@@ -7,9 +7,7 @@ import {
   removeUserSave,
 } from "../../DataManagers/homeManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
@@ -118,7 +116,10 @@ export default function HomeList({ loggedInUser }) {
     } else {
       // If not saved, show add message
       setAlertMessage(
-        "Home has been added to your saved properties. You can now view it there."
+        <div>
+          Home has been added to your saved properties. You can
+          <Link to="/usersaves"> view it here</Link>.
+        </div>
       );
       setAlertVisible(true);
       const newSave = await createUserSave(home.id, loggedInUser.id);
@@ -191,11 +192,12 @@ export default function HomeList({ loggedInUser }) {
                   />
                 </div>
                 <>
-                  {home.sold === false && home.listedOn &&
-                    new Date(home.listedOn) > new Date(new Date().setDate(new Date().getDate() - 1)) && (
-                      <Badge
-                      color="primary">Recently Added!</Badge>
-                    )}
+                  {home.sold === false &&
+                    home.listedOn &&
+                    new Date(home.listedOn) >
+                      new Date(
+                        new Date().setDate(new Date().getDate() - 1)
+                      ) && <Badge color="primary">Recently Added!</Badge>}
                 </>
               </Link>
               <CardBody>

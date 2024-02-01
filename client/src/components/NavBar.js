@@ -12,6 +12,7 @@ import {
   Container,
 } from "reactstrap";
 import { logout } from "../DataManagers/authManager";
+import Logo from "../assets/dreamdwellingslogo.png";
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,14 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
 
   console.log(loggedInUser);
 
+  // <NavItem style={{
+  //   width: "30px",
+  //   height: "30px",
+  //   marginRight: "10px",
+  // }}>
+  //   <img src={Logo} alt="Logo" /> Dream Dwellings
+  // </NavItem>
+
   return (
     <Container fluid>
       <Navbar expand="lg">
@@ -27,13 +36,13 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
           <>
             <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
               <img
-                src={loggedInUser.profilePicture} 
+                src={loggedInUser.profilePicture}
                 alt="ProfilePicture"
                 style={{
                   width: "30px",
                   height: "30px",
-                  borderRadius: "50%", 
-                  marginRight: "10px", 
+                  borderRadius: "50%",
+                  marginRight: "10px",
                 }}
               />
               {loggedInUser.userName}
