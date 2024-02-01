@@ -176,7 +176,7 @@ export default function HomeDetails({ loggedInUser }) {
                       />
                     </>
                   )}
-                  {home.userSaves &&
+                  {/* {home.userSaves &&
                     !home.userSaves.some(
                       (save) => save.userProfileId === loggedInUser.id
                     ) && (
@@ -186,7 +186,7 @@ export default function HomeDetails({ loggedInUser }) {
                       // >
                       //   <FontAwesomeIcon icon={faHeart} /> Save
                       // </Button>
-                    )}
+                    )} */}
                   <Button
                     onClick={() =>
                       handleHomePurchaseClick(home.id, loggedInUser.id)
