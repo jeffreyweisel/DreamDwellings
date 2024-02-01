@@ -20,6 +20,7 @@ import {
 import PriceUpdateModal from "./PriceUpdateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+
   faTrash,
   faCartShopping,
   faXmark,
@@ -99,7 +100,7 @@ export default function HomeDetails({ loggedInUser }) {
 
   // sell home that user owns
   const handleHomeListingClick = (id) => {
-    const confirm = window.confirm("Are you suuuuureeeee?");
+    const confirm = window.confirm("Are you sure you want to sell this home?");
     if (confirm) {
       listHome(id).then(() => {
         navigate("/userhomes");
@@ -219,6 +220,19 @@ export default function HomeDetails({ loggedInUser }) {
                   </div>
                 )}
                 {home.userProfileId === loggedInUser.id && (
+
+                      <PriceUpdateModal
+                        // pass props needed to the PriceUpdateModal
+                        isOpen={isModalOpen}
+                        toggleModal={closeModal}
+                        currentPrice={home.price}
+                        setEditedPrice={setEditedPrice}
+                        onSubmit={handleSubmitPriceChange}
+                      />
+                    </>
+                  )}
+                  
+
                   <Button
                     className="mt-5"
                     style={{ alignSelf: "flex-end" }}
