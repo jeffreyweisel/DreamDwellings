@@ -9,15 +9,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,
-  faTemperatureDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 import HomeFilterBar from "./HomeFilterBar";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import HomeImageCarousel from "./HomeImageCarousel";
 
 export default function HomeList({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
