@@ -29,7 +29,8 @@ export default function PriceUpdateModal({
     console.log(newPriceValue);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log("newPrice:", newPrice);
     onSubmit(newPrice);
     toggleModal();
@@ -42,7 +43,7 @@ export default function PriceUpdateModal({
         <Input type="number" value={newPrice} onChange={handlePriceChange} />
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button color="primary" onClick={ (e) => handleSubmit(e)}>
           Save
         </Button>
         <Button color="secondary" onClick={toggleModal}>

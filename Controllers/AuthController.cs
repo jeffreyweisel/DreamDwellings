@@ -109,6 +109,7 @@ public class AuthController : ControllerBase
                 LastName = profile.LastName,
                 IdentityUserId = identityUserId,
                 UserName = User.FindFirstValue(ClaimTypes.Name),
+                ProfilePicture = profile.ProfilePicture,
                 Email = User.FindFirstValue(ClaimTypes.Email),
                 Roles = roles
             };
@@ -138,7 +139,7 @@ public class AuthController : ControllerBase
             {
                 FirstName = registration.FirstName,
                 LastName = registration.LastName,
-                IdentityUserId = user.Id,
+                IdentityUserId = user.Id
             });
             _dbContext.SaveChanges();
 

@@ -13,17 +13,17 @@ export default function UserSavedHomes({ loggedInUser }) {
     getHomes().then(setHomes);
   }, []);
 
-  const handleUserUnsaveButton = (id) => {
-    const confirm = window.confirm(
-      "Are you sure you want to unsave this home?"
-    );
+  // const handleUserUnsaveButton = (id) => {
+  //   const confirm = window.confirm(
+  //     "Are you sure you want to unsave this home?"
+  //   );
 
-    if (confirm) {
-      removeUserSave(id, loggedInUser.id).then(() => {
-        navigate("/homes");
-      });
-    }
-  };
+  //   if (confirm) {
+  //     removeUserSave(id, loggedInUser.id).then(() => {
+  //       navigate("/homes");
+  //     });
+  //   }
+  // };
 
   return (
     <div className="container mt-4">
@@ -59,9 +59,9 @@ export default function UserSavedHomes({ loggedInUser }) {
                 </CardText>
                 <br />
               </CardBody>
-              <Button onClick={() => handleUserUnsaveButton(home.id)}>
+              {/* <Button onClick={() => handleUserUnsaveButton(home.id)}>
                 Unsave
-              </Button>
+              </Button> */}
             </Card>
           ))}
       </div>

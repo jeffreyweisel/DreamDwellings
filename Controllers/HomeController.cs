@@ -70,9 +70,10 @@ public class HomeController : ControllerBase
                     })
                     .ToList()
             })
-            .ToList());
+            .OrderByDescending(h => h.ListedOn).ToList());
     }
 
+// return shows.OrderByDescending(s => s.ImdbRating).Take(3).ToList();
 
     // Get homes by Id with home owner and user save properties included
     [HttpGet("{id}")]
@@ -159,7 +160,7 @@ public class HomeController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            // Log the exception details
+            //  exception details
             Console.WriteLine("DbUpdateException Message: " + ex.Message);
             Console.WriteLine("Inner Exception Message: " + ex.InnerException?.Message);
             Console.WriteLine("StackTrace: " + ex.StackTrace);
@@ -283,6 +284,7 @@ public class HomeController : ControllerBase
         homeToUpdate.Sold = false;
         homeToUpdate.PurchasedOn = null;
         homeToUpdate.UserProfileId = null;
+        homeToUpdate.ListedOn = DateTime.Today;
 
         _dbContext.SaveChanges();
 

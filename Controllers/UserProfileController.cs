@@ -35,6 +35,7 @@ public class UserProfileController : ControllerBase
                 IdentityUserId = up.IdentityUserId,
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
+                ProfilePicture = up.ProfilePicture,
                 OwnedHomes = up.OwnedHomes
                     .Select(h => new HomeDTO
                     {
@@ -106,6 +107,7 @@ public class UserProfileController : ControllerBase
             LastName = up.LastName,
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
+            ProfilePicture = up.ProfilePicture,
             IdentityUserId = up.IdentityUserId,
             Roles = _dbContext.UserRoles
             .Where(ur => ur.UserId == up.IdentityUserId)
@@ -139,6 +141,7 @@ public class UserProfileController : ControllerBase
             LastName = userProfile.LastName,
             Email = userProfile.IdentityUser.Email,
             UserName = userProfile.IdentityUser.UserName,
+            ProfilePicture = userProfile.ProfilePicture,
             OwnedHomes = userProfile.OwnedHomes
                     .Select(h => new HomeDTO
                     {
