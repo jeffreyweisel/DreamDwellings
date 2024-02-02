@@ -32,7 +32,7 @@ export default function UserHomes({ loggedInUser }) {
                 />
                 </Link>
                 <CardBody>
-                  <CardText>
+                  <CardText  style={{ marginBottom: "4px"}}>
                     <strong>
                     <FontAwesomeIcon icon={faCalendarCheck} /> Purchased on{" "}
                       {new Date(home.purchasedOn).toLocaleDateString("en-US")}

@@ -46,7 +46,7 @@ export default function UserSavedHomes({ loggedInUser }) {
                 />
               </Link>
               <CardBody>
-                <CardText>
+                <CardText  style={{ marginBottom: "4px"}}>
                   <strong>${home.price.toLocaleString("en-US")}</strong> -{" "}
                   <small>{home.homeType.homeTypeName} for sale</small>
                   <br />
