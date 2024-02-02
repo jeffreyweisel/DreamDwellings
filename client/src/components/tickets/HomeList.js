@@ -12,6 +12,8 @@ import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 import HomeFilterBar from "./HomeFilterBar";
+import Logo from "../../assets/forreallogo.png";
+import "./Card.css";
 
 export default function HomeList({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
@@ -117,7 +119,7 @@ export default function HomeList({ loggedInUser }) {
       // If not saved, show add message
       setAlertMessage(
         <div>
-          Home has been added to your saved properties. You can view it 
+          Home has been added to your saved properties. You can view it
           <Link to="/usersaves"> here</Link>.
         </div>
       );
@@ -138,8 +140,20 @@ export default function HomeList({ loggedInUser }) {
 
   return (
     <div className="container mt-4">
-      {/* <HomeImageCarousel 
-      /> */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          style={{ width: "400px", height: "150px" }}
+          src={Logo}
+          alt="Logo"
+        />
+      </div>
       <HomeFilterBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -161,6 +175,7 @@ export default function HomeList({ loggedInUser }) {
             <Card
               key={`home-${home.id}`}
               style={{ width: "20rem", margin: "2px", marginBottom: "15px" }}
+              className="hover-card"
             >
               <Link to={`${home.id}`}>
                 <CardImg
@@ -191,6 +206,9 @@ export default function HomeList({ loggedInUser }) {
                     size="2x"
                   />
                 </div>
+                <div className="card-overlay">
+                    <p>Show Details</p>
+                  </div>
                 <>
                   {home.sold === false &&
                     home.listedOn &&
@@ -201,7 +219,7 @@ export default function HomeList({ loggedInUser }) {
                 </>
               </Link>
               <CardBody>
-                <CardText style={{ marginBottom: "4px"}}>
+                <CardText style={{ marginBottom: "4px" }}>
                   <strong>${home.price.toLocaleString("en-US")}</strong> -{" "}
                   <small>{home.homeType.homeTypeName} for sale</small>
                   <br />
