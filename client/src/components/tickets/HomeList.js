@@ -117,8 +117,8 @@ export default function HomeList({ loggedInUser }) {
       // If not saved, show add message
       setAlertMessage(
         <div>
-          Home has been added to your saved properties. You can
-          <Link to="/usersaves"> view it here</Link>.
+          Home has been added to your saved properties. You can view it 
+          <Link to="/usersaves"> here</Link>.
         </div>
       );
       setAlertVisible(true);
@@ -160,7 +160,7 @@ export default function HomeList({ loggedInUser }) {
           .map((home) => (
             <Card
               key={`home-${home.id}`}
-              style={{ width: "20rem", margin: "2px" }}
+              style={{ width: "20rem", margin: "2px", marginBottom: "15px" }}
             >
               <Link to={`${home.id}`}>
                 <CardImg
@@ -201,7 +201,7 @@ export default function HomeList({ loggedInUser }) {
                 </>
               </Link>
               <CardBody>
-                <CardText>
+                <CardText style={{ marginBottom: "4px"}}>
                   <strong>${home.price.toLocaleString("en-US")}</strong> -{" "}
                   <small>{home.homeType.homeTypeName} for sale</small>
                   <br />
