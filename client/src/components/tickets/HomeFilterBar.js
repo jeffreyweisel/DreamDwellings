@@ -99,9 +99,9 @@ export default function HomeFilterBar({
             </Col>
             {/* Clear filters button */}
             <Col>
-              <Button color="primary" onClick={clearFilters}>
-                <FontAwesomeIcon icon={faCircleXmark} /> Reset
-              </Button>
+               
+                <FontAwesomeIcon icon={faCircleXmark} onClick={clearFilters} /> Reset
+              
             </Col>
           </Row>
         </Col>

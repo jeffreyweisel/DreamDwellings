@@ -45,7 +45,7 @@ export default function CreateNewHomeForm() {
 
   return (
     <div className="container">
-      <h4 className="mb-4">Add New Home Listing!</h4>
+      <h4 style={{marginBottom: "25px", marginTop: "20px"}}>Add New Home Listing!</h4>
       <Form className="d-flex flex-wrap">
         <FormGroup>
           <Label htmlFor="homeImage">Image:</Label>

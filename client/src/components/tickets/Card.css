@@ -1,0 +1,28 @@
+.hover-card {
+    transition: filter 0.3s ease-in-out;
+  }
+  
+  .hover-card:hover {
+    backdrop-filter: blur(1px); /* Add desired blur effect */
+  }
+  
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 45, 45, 0.6); /* Add desired overlay color and opacity */
+    color: white;
+    font-size: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    
+  }
+  
+  .hover-card:hover .card-overlay {
+    opacity: .5;
+  }
