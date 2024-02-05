@@ -1,7 +1,7 @@
 
 # Dream Dwellings
 
-<img width="auto" alt="Screenshot 2024-02-01 at 8 25 58 PM" src="https://github.com/jeffreyweisel/DreamDwellings/assets/51765188/81ef7c4c-421d-4843-ab93-2d4642f4dd31">
+<img width="auto" alt="Screenshot 2024-02-05 at 12 01 01 PM" src="https://github.com/jeffreyweisel/DreamDwellings/assets/51765188/a90dcdcd-31e7-432a-ae4c-3745ad0bac8a">
 
 ## Dream Dwellings is an app for users who want to build their dream real estate portfolio 
 - Login and see a list of homes that are available in Middle Tennessee
@@ -27,6 +27,7 @@
 
 ## Additional Dependencies Used
 > react-confetti,
+> >fontAwesome icons
 
 ### Nashville Software School Full-Stack Capstone
 
