@@ -27,7 +27,7 @@
 
 ## Additional Dependencies Used
 > react-confetti,
-> >fontAwesome icons
+> fontAwesome icons
 
 ### Nashville Software School Full-Stack Capstone
 
