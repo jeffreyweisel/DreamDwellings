@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { login } from "../../DataManagers/authManager";
+import LoginImage from"../../assets/LoginImageDreamDwellings.jpeg.png";
+import "./Login.css"
 
 export default function Login({ setLoggedInUser }) {
   const navigate = useNavigate();
@@ -23,8 +25,8 @@ export default function Login({ setLoggedInUser }) {
   };
 
   return (
-    <div className="container" style={{ maxWidth: "500px" }}>
-      <h3>Login</h3>
+    <div className="container" style={{ maxWidth: "500px", marginTop: "90px" }}>
+      <h3>Dream Dwellings Login</h3>
       <FormGroup>
         <Label>Email</Label>
         <Input

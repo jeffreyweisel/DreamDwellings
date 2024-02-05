@@ -26,3 +26,8 @@
   .hover-card:hover .card-overlay {
     opacity: .5;
   }
+
+  .card-img-container {
+    position: relative;
+    overflow: hidden;
+  }

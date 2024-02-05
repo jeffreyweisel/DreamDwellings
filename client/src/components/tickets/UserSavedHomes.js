@@ -3,7 +3,8 @@ import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
 import { getHomes, removeUserSave } from "../../DataManagers/homeManager";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faHouseUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import "./Card.css"
 
 export default function UserSavedHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
@@ -27,6 +28,15 @@ export default function UserSavedHomes({ loggedInUser }) {
 
   return (
     <div className="container mt-4">
+      <div
+        style={{
+          display: "flex",
+          marginBottom: "20px",
+        }}
+      >
+        <h4> <FontAwesomeIcon icon={faHouseUser} /> {" "}
+       <>Saved Properties</></h4>
+      </div>
       <div className="d-flex flex-wrap">
         {homes
           .filter(
@@ -36,14 +46,19 @@ export default function UserSavedHomes({ loggedInUser }) {
               c.userSaves.some((save) => save.userProfileId === loggedInUser.id)
           )
           .map((home) => (
-            <Card key={`home-${home.id}`} style={{ width: "20rem", margin: '2px' }}>
+            <Card key={`home-${home.id}`} style={{ width: "20rem", margin: '2px' }} className="hover-card">
               <Link to={`/homes/${home.id}`}>
+              <div className="card-img-container">
                 <CardImg
                   style={{ objectFit: "cover", height: "200px" }}
                   variant="top"
                   src={home.homeImage}
                   alt="homeimg"
                 />
+                <div className="card-overlay">
+                    <p>Show Details</p>
+                  </div>
+                </div>
               </Link>
               <CardBody>
                 <CardText  style={{ marginBottom: "4px"}}>

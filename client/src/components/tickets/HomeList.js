@@ -7,7 +7,7 @@ import {
   removeUserSave,
 } from "../../DataManagers/homeManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faHouseFire, faLocationDot, faSignHanging } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
@@ -131,29 +131,31 @@ export default function HomeList({ loggedInUser }) {
       getData(updatedHomes);
     }
 
-    // Hide alert after 3 seconds
+    // Hide alert after 4 seconds
     setTimeout(() => {
       setAlertVisible(false);
       setAlertMessage("");
     }, 4000);
   };
 
+  // Make sure that the p tag for results only counts the length of not sold homes
+  const unsoldHomes = filteredHomes.filter(home => !home.sold);
+
   return (
     <div className="container mt-4">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <img
-          style={{ width: "400px", height: "150px" }}
-          src={Logo}
-          alt="Logo"
-        />
+      <div>
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "20px",
+            flexDirection: "column",
+          }}
+        >
+          <h4> <FontAwesomeIcon icon={faSignHanging} /> Properties For Sale</h4>
+          <p>{unsoldHomes.length} results</p>
+        </div>
       </div>
+
       <HomeFilterBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -178,12 +180,17 @@ export default function HomeList({ loggedInUser }) {
               className="hover-card"
             >
               <Link to={`${home.id}`}>
-                <CardImg
-                  style={{ objectFit: "cover", height: "200px" }}
-                  variant="top"
-                  src={home.homeImage}
-                  alt="homeimg"
-                />
+                <div className="card-img-container">
+                  <CardImg
+                    style={{ objectFit: "cover", height: "200px" }}
+                    variant="top"
+                    src={home.homeImage}
+                    alt="homeimg"
+                  />
+                  <div className="card-overlay">
+                    <p>Show Details</p>
+                  </div>
+                </div>
                 <div
                   style={{
                     color: "white",
@@ -206,9 +213,6 @@ export default function HomeList({ loggedInUser }) {
                     size="2x"
                   />
                 </div>
-                <div className="card-overlay">
-                    <p>Show Details</p>
-                  </div>
                 <>
                   {home.sold === false &&
                     home.listedOn &&
