@@ -28,6 +28,7 @@ import {
   faXmark,
   faHouseChimney,
   faCircleCheck,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
@@ -40,13 +41,13 @@ export default function HomeDetails({ loggedInUser }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [alertVisible, setAlertVisible] = useState("")
+  const [alertVisible, setAlertVisible] = useState("");
 
   const navigate = useNavigate();
 
   const getData = () => {
     getHome(id).then(setHome);
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -80,7 +81,7 @@ export default function HomeDetails({ loggedInUser }) {
     );
     if (confirm) {
       setIsConfirmed(true);
-        // adds userProfileId to the home object
+      // adds userProfileId to the home object
       purchaseHome(id, userId).then(() => {
         //timeout so user can see the confetti drop
         setTimeout(() => {
@@ -112,7 +113,11 @@ export default function HomeDetails({ loggedInUser }) {
 
   // sell home that user owns
   const handleHomeListingClick = (id) => {
-    const confirm = window.confirm(`Are you sure you want to list property at ${home.streetAddress} for $${home.price.toLocaleString('en-US')}?`);
+    const confirm = window.confirm(
+      `Are you sure you want to list property at ${
+        home.streetAddress
+      } for $${home.price.toLocaleString("en-US")}?`
+    );
     if (confirm) {
       listHome(id).then(() => {
         navigate("/userhomes");
@@ -142,12 +147,11 @@ export default function HomeDetails({ loggedInUser }) {
       // if home is saved, show removed message
       setAlertMessage("Home has been removed from your saved properties.");
       setAlertVisible(true);
-        // remove the user save from UserSaves table
+      // remove the user save from UserSaves table
       await removeUserSave(home.id, loggedInUser.id);
       const updatedHome = getHome(id);
       // set state
       getData(updatedHome);
-
     } else {
       // if home is not saved, show added to saves message with link
       setAlertMessage(
@@ -157,10 +161,10 @@ export default function HomeDetails({ loggedInUser }) {
         </div>
       );
       setAlertVisible(true);
-        // add new user save to UserSaves table 
+      // add new user save to UserSaves table
       const newSave = await createUserSave(home.id, loggedInUser.id);
-        // spread operator to add new user save to array
-      const updatedHomes = getHome(id, newSave)
+      // spread operator to add new user save to array
+      const updatedHomes = getHome(id, newSave);
       // set state
       getData(updatedHomes);
     }
@@ -171,8 +175,6 @@ export default function HomeDetails({ loggedInUser }) {
       setAlertMessage("");
     }, 4000);
   };
-
-  
 
   return (
     <Container
@@ -205,9 +207,9 @@ export default function HomeDetails({ loggedInUser }) {
                 {home?.streetAddress}, {home?.city}, TN
               </div>
               {home.sold === false && (
-                  <div
+                <div
                   style={{
-                    color: "gray",
+                    color: "#db6960",
                     zIndex: 1,
                   }}
                   onClick={(event) => toggleUserSave(event, home)}
@@ -218,10 +220,9 @@ export default function HomeDetails({ loggedInUser }) {
                       !home.userSaves.some(
                         (save) => save.userProfileId === loggedInUser.id
                       )
-                        ? outlineHeart 
+                        ? outlineHeart
                         : solidHeart
                     }
-                  
                   />
                 </div>
               )}
@@ -298,6 +299,17 @@ export default function HomeDetails({ loggedInUser }) {
                     >
                       <FontAwesomeIcon icon={faCartShopping} /> Purchase
                     </Button>{" "}
+                    
+                    <Button className="mt-5" color="white" style={{color: "white", border: "2px solid #0D6EFD"}}>
+                      <a
+                        href="mailto:jeffrey@kbwtech.com?subject=Home%20Inquiry&body=I%20am%20very%20interested%20in%20this%20home."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#0D6EFD", textDecoration: "none" }}
+                      >
+                        <FontAwesomeIcon icon={faUser} /> Contact Agent
+                      </a>
+                    </Button>
                   </div>
                 )}
                 {home.userProfileId === loggedInUser.id && (
