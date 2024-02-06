@@ -1,5 +1,6 @@
 const _apiUrl = "/api/auth";
 
+// existing user login
 export const login = (email, password) => {
   return fetch(_apiUrl + "/login", {
     method: "POST",
@@ -16,6 +17,7 @@ export const login = (email, password) => {
   });
 };
 
+// logout function
 export const logout = () => {
   return fetch(_apiUrl + "/logout").then((res) => {
     if (!res.ok) {
@@ -25,6 +27,7 @@ export const logout = () => {
   });
 };
 
+//function to figure out who the logged in user is atm
 export const tryGetLoggedInUser = () => {
   return fetch(_apiUrl + "/me").then((res) => {
     if (res.status === 401) {
@@ -36,6 +39,7 @@ export const tryGetLoggedInUser = () => {
   });
 };
 
+// register a new user
 export const register = (userProfile) => {
   userProfile.password = btoa(userProfile.password);
   return fetch(_apiUrl + "/register", {

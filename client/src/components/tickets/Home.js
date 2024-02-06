@@ -9,6 +9,7 @@ export default function Home() {
 
   const navigate = useNavigate();
 
+  // set styles for the welcome container
   const containerStyle = {
     display: "flex",
     flexDirection: "column",

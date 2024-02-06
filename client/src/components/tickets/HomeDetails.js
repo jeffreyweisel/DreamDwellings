@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  Alert,
   Button,
   CardBody,
   CardImg,
@@ -11,11 +12,13 @@ import {
   Row,
 } from "reactstrap";
 import {
+  createUserSave,
   deleteHome,
   editHome,
   getHome,
   listHome,
   purchaseHome,
+  removeUserSave,
 } from "../../DataManagers/homeManager";
 import PriceUpdateModal from "./PriceUpdateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,8 +29,9 @@ import {
   faHouseChimney,
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import Confetti from 'react-confetti';
-
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
+import Confetti from "react-confetti";
 
 export default function HomeDetails({ loggedInUser }) {
   const { id } = useParams();
@@ -35,13 +39,20 @@ export default function HomeDetails({ loggedInUser }) {
   const [editedPrice, setEditedPrice] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVisible, setAlertVisible] = useState("")
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getData = () => {
     getHome(id).then(setHome);
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
+  // triggered when editedPrice changes and isModalOpen is false. It then calls handleSubmitPriceChange() to save the price change to home object
   useEffect(() => {
     if (editedPrice !== 0 && !isModalOpen) {
       handleSubmitPriceChange();
@@ -69,7 +80,9 @@ export default function HomeDetails({ loggedInUser }) {
     );
     if (confirm) {
       setIsConfirmed(true);
+        // adds userProfileId to the home object
       purchaseHome(id, userId).then(() => {
+        //timeout so user can see the confetti drop
         setTimeout(() => {
           setIsConfirmed(false);
           navigate("/userhomes");
@@ -94,12 +107,12 @@ export default function HomeDetails({ loggedInUser }) {
   const handleSubmitPriceChange = async () => {
     console.log("Submitting price change. New price:", editedPrice);
     await editHome(home.id, editedPrice);
-    navigate("/homes");
+    getData();
   };
 
   // sell home that user owns
   const handleHomeListingClick = (id) => {
-    const confirm = window.confirm("Are you suuuuureeeee?");
+    const confirm = window.confirm(`Are you sure you want to list property at ${home.streetAddress} for $${home.price.toLocaleString('en-US')}?`);
     if (confirm) {
       listHome(id).then(() => {
         navigate("/userhomes");
@@ -107,10 +120,59 @@ export default function HomeDetails({ loggedInUser }) {
     }
   };
 
-  // close details view and return to home list
+  // close details view and return to home list or user homes depending ehat view user is currently in
   const handleCloseButtonClick = () => {
-    navigate("/homes");
+    if (loggedInUser.id === home.userProfileId) {
+      navigate("/userhomes");
+    } else {
+      navigate("/homes");
+    }
   };
+
+  // handles the user save and user unsave
+  const toggleUserSave = async (event, home) => {
+    event.preventDefault();
+
+    // find if user has saved home already
+    const userSavedHome = home.userSaves.find(
+      (save) => save.userProfileId === loggedInUser.id
+    );
+
+    if (userSavedHome) {
+      // if home is saved, show removed message
+      setAlertMessage("Home has been removed from your saved properties.");
+      setAlertVisible(true);
+        // remove the user save from UserSaves table
+      await removeUserSave(home.id, loggedInUser.id);
+      const updatedHome = getHome(id);
+      // set state
+      getData(updatedHome);
+
+    } else {
+      // if home is not saved, show added to saves message with link
+      setAlertMessage(
+        <div>
+          Home has been added to your saved properties. View all your saves
+          <Link to="/usersaves"> here</Link>.
+        </div>
+      );
+      setAlertVisible(true);
+        // add new user save to UserSaves table 
+      const newSave = await createUserSave(home.id, loggedInUser.id);
+        // spread operator to add new user save to array
+      const updatedHomes = getHome(id, newSave)
+      // set state
+      getData(updatedHomes);
+    }
+
+    // hide alert after 4 seconds
+    setTimeout(() => {
+      setAlertVisible(false);
+      setAlertMessage("");
+    }, 4000);
+  };
+
+  
 
   return (
     <Container
@@ -118,9 +180,7 @@ export default function HomeDetails({ loggedInUser }) {
       style={{ width: "80%", display: "flex" }}
       className="mt-4"
     >
-      <div style={{ position: 'relative' }}>
-      {isConfirmed && <Confetti />}
-    </div>
+      <div style={{ position: "relative" }}>{isConfirmed && <Confetti />}</div>
       <Row>
         <Col>
           <CardImg
@@ -144,6 +204,27 @@ export default function HomeDetails({ loggedInUser }) {
               <div>
                 {home?.streetAddress}, {home?.city}, TN
               </div>
+              {home.sold === false && (
+                  <div
+                  style={{
+                    color: "gray",
+                    zIndex: 1,
+                  }}
+                  onClick={(event) => toggleUserSave(event, home)}
+                >
+                  <FontAwesomeIcon
+                    icon={
+                      home.userSaves &&
+                      !home.userSaves.some(
+                        (save) => save.userProfileId === loggedInUser.id
+                      )
+                        ? outlineHeart 
+                        : solidHeart
+                    }
+                  
+                  />
+                </div>
+              )}
               <div>
                 <FontAwesomeIcon
                   icon={faXmark}
@@ -182,7 +263,8 @@ export default function HomeDetails({ loggedInUser }) {
             >
               {home.sold !== true && (
                 <div className="mt-5">
-                <strong>{home.daysOnMarket} days </strong>on Dream Dwellings {" "} | {" "} <strong>{home.userSaves.length}</strong> saves
+                  <strong>{home.daysOnMarket} days </strong>on Dream Dwellings |{" "}
+                  <strong>{home.userSaves.length}</strong> saves
                 </div>
               )}
               <>
@@ -233,6 +315,25 @@ export default function HomeDetails({ loggedInUser }) {
           </CardBody>
         </Col>
       </Row>
+      {/* Alert for when user saves and unsaves a home */}
+      <Alert
+        style={{
+          position: "fixed",
+          top: "4%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        color="primary"
+        isOpen={alertVisible}
+        toggle={() => setAlertVisible(false)}
+      >
+        {/* Alert message is conditiionally rendered depending on the usersaves */}
+        {alertMessage}
+      </Alert>
     </Container>
   );
 }

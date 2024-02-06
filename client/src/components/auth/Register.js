@@ -27,7 +27,6 @@ export default function Register({ setLoggedInUser }) {
         lastName,
         userName,
         email,
-       
         password,
       };
       register(newUser).then((user) => {

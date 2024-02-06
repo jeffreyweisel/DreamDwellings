@@ -1,30 +1,23 @@
 import { useEffect, useState } from "react";
 import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
-import { getHomes, removeUserSave } from "../../DataManagers/homeManager";
+import { createUserSave, getHomes, removeUserSave } from "../../DataManagers/homeManager";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import "./Card.css"
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function UserSavedHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
-  const navigate = useNavigate();
 
-  useEffect(() => {
+  const getData = () => {
     getHomes().then(setHomes);
+  }
+  
+  useEffect(() => {
+    getData();
   }, []);
-
-  // const handleUserUnsaveButton = (id) => {
-  //   const confirm = window.confirm(
-  //     "Are you sure you want to unsave this home?"
-  //   );
-
-  //   if (confirm) {
-  //     removeUserSave(id, loggedInUser.id).then(() => {
-  //       navigate("/homes");
-  //     });
-  //   }
-  // };
 
   return (
     <div className="container mt-4">

@@ -7,12 +7,11 @@ import {
   removeUserSave,
 } from "../../DataManagers/homeManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseFire, faLocationDot, faSignHanging } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faSignHanging } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 import { getHomeTypes } from "../../DataManagers/homeTypeManager";
 import HomeFilterBar from "./HomeFilterBar";
-import Logo from "../../assets/forreallogo.png";
 import "./Card.css";
 
 export default function HomeList({ loggedInUser }) {
@@ -52,7 +51,7 @@ export default function HomeList({ loggedInUser }) {
       );
     }
 
-    // Filter by Home Type via dropdown
+    // Filter by Home Type 
     if (selectedHomeType) {
       filteredHomesResult = filteredHomesResult.filter(
         (h) => h.homeTypeId == selectedHomeType
@@ -104,41 +103,48 @@ export default function HomeList({ loggedInUser }) {
   const toggleUserSave = async (event, home) => {
     event.preventDefault();
 
+    // find if user has saved home already
     const userSavedHome = home.userSaves.find(
       (save) => save.userProfileId === loggedInUser.id
     );
 
     if (userSavedHome) {
-      // If saved, show remove message
+      // if home is saved, show removed message
       setAlertMessage("Home has been removed from your saved properties.");
       setAlertVisible(true);
+        // remove the user save from UserSaves table
       await removeUserSave(home.id, loggedInUser.id);
       const updatedHomes = getHomes();
+      // set state
       getData(updatedHomes);
+
     } else {
-      // If not saved, show add message
+      // if home is not saved, show added to saves message with link
       setAlertMessage(
         <div>
-          Home has been added to your saved properties. You can view it
+          Home has been added to your saved properties. View all your saves
           <Link to="/usersaves"> here</Link>.
         </div>
       );
       setAlertVisible(true);
+        // add new user save to UserSaves table 
       const newSave = await createUserSave(home.id, loggedInUser.id);
+        // spread operator to add new user save to array
       const updatedHomes = homes.map((h) =>
         h.id === home.id ? { ...h, userSaves: [...h.userSaves, newSave] } : h
       );
+      // set state
       getData(updatedHomes);
     }
 
-    // Hide alert after 4 seconds
+    // hide alert after 4 seconds
     setTimeout(() => {
       setAlertVisible(false);
       setAlertMessage("");
     }, 4000);
   };
 
-  // Make sure that the p tag for results only counts the length of not sold homes
+  // Make sure that the p tag for results only counts the length of not unsold homes
   const unsoldHomes = filteredHomes.filter(home => !home.sold);
 
   return (
@@ -155,7 +161,7 @@ export default function HomeList({ loggedInUser }) {
           <p>{unsoldHomes.length} results</p>
         </div>
       </div>
-
+        {/* Filter bar with props for FilterBar.js */}
       <HomeFilterBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -214,6 +220,7 @@ export default function HomeList({ loggedInUser }) {
                   />
                 </div>
                 <>
+                {/* Badge for homes listed in the last day */}
                   {home.sold === false &&
                     home.listedOn &&
                     new Date(home.listedOn) >
@@ -239,6 +246,7 @@ export default function HomeList({ loggedInUser }) {
             </Card>
           ))}
       </div>
+      {/* Alert for when user saves and unsaves a home */}
       <Alert
         style={{
           position: "fixed",
@@ -254,6 +262,7 @@ export default function HomeList({ loggedInUser }) {
         isOpen={alertVisible}
         toggle={() => setAlertVisible(false)}
       >
+        {/* Alert message is conditiionally rendered depending on the usersaves */}
         {alertMessage}
       </Alert>
     </div>

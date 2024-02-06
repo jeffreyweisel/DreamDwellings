@@ -8,10 +8,8 @@ import {
   Navbar,
   NavbarToggler,
   Container,
-  NavbarBrand,
 } from "reactstrap";
 import { logout } from "../DataManagers/authManager";
-import Logo from "../assets/forreallogo.png";
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
   const [open, setOpen] = useState(false);
@@ -26,7 +24,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
         {loggedInUser ? (
           <>
             <NavItem style={{ listStyle: "none" }}>
-              Welcome back, {loggedInUser.firstName}!
+              Welcome, {loggedInUser.firstName}!
               <NavLink tag={RRNavLink} to="/homes"></NavLink>
             </NavItem>
             <NavbarToggler onClick={toggleNavbar} />
