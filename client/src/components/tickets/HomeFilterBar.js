@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Input, FormGroup, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeFilterBar({
   searchTerm,
@@ -67,7 +67,6 @@ export default function HomeFilterBar({
                 setSelectedBedNumber(event.target.value);
               }}
               value={selectedBedNumber}
-              className="player-select"
             >
               <option value="">Bedrooms</option>
               <option value="1">1+</option>
@@ -81,21 +80,46 @@ export default function HomeFilterBar({
         <Col md="4" className="home-search">
           <Row>
             <Col>
+            <FormGroup>
               <Input
-                type="number"
-                placeholder="Min Price"
+                type="select"
                 value={minPrice}
                 onChange={(event) => setMinPrice(event.target.value)}
-              />
+              >
+              <option value="">Min Price</option>
+              <option value="100000">100,000</option>
+              <option value="200000">200,000</option>
+              <option value="300000">300,000</option>
+              <option value="400000">400,000</option>
+              <option value="500000">500,000</option>
+              <option value="600000">600,000</option>
+              <option value="700000">700,000</option>
+              <option value="800000">800,000</option>
+              <option value="900000">900,000</option>
+              </Input>
+              </FormGroup>
             </Col>
-            -{/* Maximum Price Input */}
+            {/* Maximum Price Input */}
             <Col>
+            <FormGroup>
               <Input
-                type="number"
+                type="select"
                 placeholder="Max Price"
                 value={maxPrice}
                 onChange={(event) => setMaxPrice(event.target.value)}
-              />
+              >
+              <option value="">Max Price</option>
+              <option value="200000">200,000</option>
+              <option value="300000">300,000</option>
+              <option value="400000">400,000</option>
+              <option value="500000">500,000</option>
+              <option value="600000">600,000</option>
+              <option value="700000">700,000</option>
+              <option value="800000">800,000</option>
+              <option value="900000">900,000</option>
+              <option value="1000000">1,000,000</option>
+              </Input>
+              </FormGroup>
             </Col>
             {/* Clear filters button */}
             <Col>
@@ -112,3 +136,25 @@ export default function HomeFilterBar({
     </div>
   );
 }
+
+
+//  {/* Minimum Price Input */}
+//  <Col md="4" className="home-search">
+//  <Row>
+//    <Col>
+//      <Input
+//        type="number"
+//        placeholder="Min Price"
+//        value={minPrice}
+//        onChange={(event) => setMinPrice(event.target.value)}
+//      />
+//    </Col>
+//    -{/* Maximum Price Input */}
+//    <Col>
+//      <Input
+//        type="number"
+//        placeholder="Max Price"
+//        value={maxPrice}
+//        onChange={(event) => setMaxPrice(event.target.value)}
+//      />
+//    </Col>
