@@ -98,7 +98,7 @@ export default function HomeFilterBar({
               <option value="900000">900,000</option>
               </Input>
               </FormGroup>
-            </Col>
+            </Col> -
             {/* Maximum Price Input */}
             <Col>
             <FormGroup>

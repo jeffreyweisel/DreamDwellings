@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
-import { createUserSave, getHomes, removeUserSave } from "../../DataManagers/homeManager";
-import { Link, useNavigate } from "react-router-dom";
+import { Card, CardBody, CardImg, CardText } from "reactstrap";
+import { getHomes } from "../../DataManagers/homeManager";
+import { Link} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import "./Card.css"
-import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function UserSavedHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
@@ -67,9 +65,6 @@ export default function UserSavedHomes({ loggedInUser }) {
                 </CardText>
                 <br />
               </CardBody>
-              {/* <Button onClick={() => handleUserUnsaveButton(home.id)}>
-                Unsave
-              </Button> */}
             </Card>
           ))}
       </div>

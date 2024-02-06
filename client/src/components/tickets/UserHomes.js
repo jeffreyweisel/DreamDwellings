@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardImg, CardText } from "reactstrap";
-import { getHomes, listHome } from "../../DataManagers/homeManager";
-import { Link, useNavigate } from "react-router-dom";
+import { Card, CardBody, CardImg, CardText } from "reactstrap";
+import { getHomes } from "../../DataManagers/homeManager";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,
   faCalendarCheck,
-  faHouseUser,
   faHouseCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Card.css";
 
 export default function UserHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     getHomes().then(setHomes);
   }, []);
-
-  //${home.price.toLocaleString('en-US')}
 
   return (
     <>
