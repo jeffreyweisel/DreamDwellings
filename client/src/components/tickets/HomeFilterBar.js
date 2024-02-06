@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Input, FormGroup, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeFilterBar({
   searchTerm,
