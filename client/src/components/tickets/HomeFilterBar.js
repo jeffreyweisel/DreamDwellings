@@ -136,25 +136,3 @@ export default function HomeFilterBar({
     </div>
   );
 }
-
-
-//  {/* Minimum Price Input */}
-//  <Col md="4" className="home-search">
-//  <Row>
-//    <Col>
-//      <Input
-//        type="number"
-//        placeholder="Min Price"
-//        value={minPrice}
-//        onChange={(event) => setMinPrice(event.target.value)}
-//      />
-//    </Col>
-//    -{/* Maximum Price Input */}
-//    <Col>
-//      <Input
-//        type="number"
-//        placeholder="Max Price"
-//        value={maxPrice}
-//        onChange={(event) => setMaxPrice(event.target.value)}
-//      />
-//    </Col>
