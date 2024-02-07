@@ -24,6 +24,18 @@ export default function CreateNewHomeForm() {
     console.log(homeTypes);
   }, []);
 
+  const fillFormWithDummyData = () => {
+    setHomeImage('https://felix-homes-assets.s3.us-east-2.amazonaws.com/large_best_custom_home_builders_tennessee_f5fbfed242.png');
+    setStreetAddress('6763 Robin Ave');
+    setCity('Franklin');
+    setSquareFeet('2000');
+    setBedNumber('3');
+    setBathNumber('2');
+    setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+    setPrice('300000');
+    setHomeTypeId(1); // single family home
+  };
+
   const submit = () => {
     const newHome = {
       homeImage,
@@ -152,6 +164,9 @@ export default function CreateNewHomeForm() {
           </Input>
         </FormGroup>
       </Form>
+      <Button color="secondary" className="mr-4" onClick={fillFormWithDummyData}>
+        Fill with demo data
+      </Button>
       <Button color="primary" className="mr-4" onClick={submit}>
         Submit
       </Button>
