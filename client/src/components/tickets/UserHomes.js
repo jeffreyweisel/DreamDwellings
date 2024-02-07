@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, CardBody, CardImg, CardText } from "reactstrap";
+import { Button, Card, CardBody, CardImg, CardText, Input } from "reactstrap";
 import { getHomes } from "../../DataManagers/homeManager";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,15 +7,39 @@ import {
   faLocationDot,
   faCalendarCheck,
   faHouseCircleCheck,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Card.css";
 
 export default function UserHomes({ loggedInUser }) {
   const [homes, setHomes] = useState([]);
+  const [filteredHomes, setFilteredHomes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getHomes().then(setHomes);
   }, []);
+
+  // Filtered State
+  useEffect(() => {
+    let filteredHomesResult = homes;
+
+    // Filter by city via search bar
+    if (searchTerm.length > 0) {
+      filteredHomesResult = filteredHomesResult.filter((h) =>
+        h.streetAddress.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // final filtered state
+    setFilteredHomes(filteredHomesResult);
+  }, [searchTerm, homes]);
+
+  // clears all filter inputs and resets to original state
+  const clearFilters = () => {
+    setSearchTerm("");
+    setFilteredHomes(homes);
+  };
 
   return (
     <>
@@ -24,12 +48,43 @@ export default function UserHomes({ loggedInUser }) {
           style={{
             display: "flex",
             marginBottom: "20px",
+            flexDirection: "column",
           }}
         >
-         <h4>  <FontAwesomeIcon icon={faHouseCircleCheck} /> Owned Properties</h4>
+          <h4>
+            {" "}
+            <FontAwesomeIcon icon={faHouseCircleCheck} /> Owned Properties
+          </h4>
+        </div>
+        <div
+          className="search-wrapper"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <Input
+              style={{ width: "1200px", marginBottom: "10px" }}
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+              }}
+              type="text"
+              placeholder="Address Search"
+              className="player-input"
+              value={searchTerm}
+            />
+          </div>
+          <div>
+            <Button color="primary" onClick={clearFilters}>
+              {" "}
+              <FontAwesomeIcon icon={faCircleXmark} /> Reset
+            </Button>
+          </div>
         </div>
         <div className="d-flex flex-wrap">
-          {homes
+          {filteredHomes
             .filter((h) => h.userProfileId === loggedInUser.id)
             .map((home) => (
               <Card

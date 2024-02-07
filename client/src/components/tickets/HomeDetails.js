@@ -299,10 +299,10 @@ export default function HomeDetails({ loggedInUser }) {
                     >
                       <FontAwesomeIcon icon={faCartShopping} /> Purchase
                     </Button>{" "}
-                    
-                    <Button className="mt-5" color="white" style={{color: "white", border: "2px solid #0D6EFD"}}>
+                    {!loggedInUser.roles.includes("Admin") && (
+                      <Button className="mt-5" color="white" style={{color: "white", border: "2px solid #0D6EFD"}}>
                       <a
-                        href="mailto:jeffrey@kbwtech.com?subject=Home%20Inquiry&body=I%20am%20very%20interested%20in%20this%20home."
+                        href={`mailto:jeffrey@kbwtech.com?subject=${home.streetAddress}%20Inquiry&body=I%20am%20very%20interested%20in%20this%20home.`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: "#0D6EFD", textDecoration: "none" }}
@@ -310,6 +310,7 @@ export default function HomeDetails({ loggedInUser }) {
                         <FontAwesomeIcon icon={faUser} /> Contact Agent
                       </a>
                     </Button>
+                    )}
                   </div>
                 )}
                 {home.userProfileId === loggedInUser.id && (
