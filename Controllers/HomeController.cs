@@ -73,7 +73,7 @@ public class HomeController : ControllerBase
             .OrderByDescending(h => h.ListedOn).ToList());
     }
 
-// return shows.OrderByDescending(s => s.ImdbRating).Take(3).ToList();
+
 
     // Get homes by Id with home owner and user save properties included
     [HttpGet("{id}")]
@@ -148,7 +148,7 @@ public class HomeController : ControllerBase
     {
         try
         {
-            home.ListedOn = DateTime.Today;
+            home.ListedOn = DateTime.Now;
             home.Sold = false;
             home.PurchasedOn = null;
             home.HomeOwner = null;
@@ -284,7 +284,7 @@ public class HomeController : ControllerBase
         homeToUpdate.Sold = false;
         homeToUpdate.PurchasedOn = null;
         homeToUpdate.UserProfileId = null;
-        homeToUpdate.ListedOn = DateTime.Today;
+        homeToUpdate.ListedOn = DateTime.Now;
 
         _dbContext.SaveChanges();
 
