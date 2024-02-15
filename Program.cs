@@ -69,6 +69,10 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Use the dynamically assigned port from the PORT environment variable
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // Default to 5000 if PORT is not defined
+app.Urls.Add($"http://0.0.0.0:{port}");
+
 app.MapControllers();
 
 app.Run();

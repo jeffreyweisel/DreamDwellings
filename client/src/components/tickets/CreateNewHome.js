@@ -25,7 +25,7 @@ export default function CreateNewHomeForm() {
   }, []);
 
   const fillFormWithDummyData = () => {
-    setHomeImage('https://felix-homes-assets.s3.us-east-2.amazonaws.com/large_best_custom_home_builders_tennessee_f5fbfed242.png');
+    setHomeImage('https://nhs-dynamic-secure.akamaized.net/Images/Homes/Drees/66996087-230412.jpg');
     setStreetAddress('6763 Robin Ave');
     setCity('Franklin');
     setSquareFeet('2000');
@@ -58,7 +58,7 @@ export default function CreateNewHomeForm() {
   return (
     <div className="container">
       <h4 style={{marginBottom: "25px", marginTop: "20px"}}>Add New Home Listing!</h4>
-      <Form className="d-flex flex-wrap">
+      <Form className="p">
         <FormGroup>
           <Label htmlFor="homeImage">Image:</Label>
           <Input

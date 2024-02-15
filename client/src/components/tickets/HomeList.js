@@ -226,7 +226,9 @@ export default function HomeList({ loggedInUser }) {
                     new Date(home.listedOn) >
                       new Date(
                         new Date().setDate(new Date().getDate() - 1)
-                      ) && <Badge color="primary">Recently Added!</Badge>}
+                      ) && <Badge 
+                      
+                      color="primary">Recently Added!</Badge>}
                 </>
               </Link>
               <CardBody>
