@@ -65,13 +65,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
 // these two calls are required to add auth to the pipeline for a request
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Use the dynamically assigned port from the PORT environment variable
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // Default to 5000 if PORT is not defined
-app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.MapControllers();
 
